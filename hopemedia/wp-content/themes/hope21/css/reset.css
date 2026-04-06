@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* =====================================================
+ * reset.css
+ * - Edit html5doctor.com's CSS
+ * - http://html5doctor.com/html-5-reset-stylesheet/
+ * Last Updated:2017-03-01
+====================================================== */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video,input,select,textarea{margin:0;padding:0;border:0;outline:0;font-size:100%;font-style:normal;font-weight:400;vertical-align:bottom;background:transparent;}
+article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block;}
+html{font-size:62.5%;}
+body{font-family:sans-serif;line-height:1;}
+ul,ol{list-style:none;}
+blockquote,q {quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+a{margin:0;padding:0;vertical-align:bottom;background:transparent;outline:none;}
+img{vertical-align:bottom;}
+ins{background-color:#ff9;color:#000;text-decoration:none;}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold;}
+del{text-decoration:line-through;}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help;}
+table{border-collapse:collapse;border-spacing:0;width:100%;}
+th,td{text-align:left;vertical-align:top;}
+input,select,textarea{font-family:inherit;}
+input[type="submit"]{cursor:pointer;}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0;}

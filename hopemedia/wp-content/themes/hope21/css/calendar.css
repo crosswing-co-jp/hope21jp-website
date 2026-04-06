@@ -1,0 +1,76 @@
+#java-cale table {
+	border: 2px solid #CCC;
+}
+
+#java-cale table.calendar {
+	padding: 0px;
+	margin: 0px;
+}
+
+#java-cale table.calendar tr.headline td{
+	font-size: 11px;
+	padding-top: 5px;
+	padding-right: 5px;
+}
+#java-cale table.calendar th {
+	text-align: left;
+	font-family: "Myriad Pro", "Verdana", "Arial", "Helvetica", "sans-serif";
+	font-size: 14px;
+	color: #006DBE;
+	padding-top: 7px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	font-weight: bold;
+}
+#java-cale table.calendar th span {
+	font-family: "‚l‚r ‚oƒSƒVƒbƒN","Hiragino Kaku Gothic Pro W3","ƒqƒ‰ƒMƒmŠpƒS Pro W3","Osaka";
+	cursor: pointer;
+	float: right;
+}
+#java-cale table.calendar td {
+	border-bottom: solid 1px #CCCCCC;
+	text-align: center;
+	width: 30px;
+	height: 29px;
+	vertical-align: middle;
+	font-family: "Myriad Pro","Verdana","Arial", "Helvetica", "sans-serif";
+	line-height: normal;
+	font-size: 14px;
+	color: #333333;
+}
+#java-cale table.calendar td.click {
+	cursor: pointer;
+	background-color: #FFFFFF;
+}
+#java-cale table.calendar td.Today {
+	font-weight: bolder;
+	color: #009900;
+	font-size: 15px;
+}
+#java-cale table.calendar td.Sat {
+	color: #292DF0;
+	font-weight: bold;
+	background-color: #AFF1FB;
+}
+#java-cale table.calendar td.Sun {
+	color: #FF0000;
+	background-color: #FFFEFE;
+}
+#java-cale table.calendar td.holyday {
+	color: #FF0000;
+	font-weight: bold;
+	background-color: #FCC;
+}
+#java-cale table.calendar td.xday {
+	font-weight: normal;
+	color: #F00;
+	font-size: 14px;
+}
+#java-cale table.calendar td.birthday {
+	font-weight: bolder;
+	color: #990000;
+	font-size: 14px;
+}
+
+//

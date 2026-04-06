@@ -1,0 +1,193 @@
+@charset "UTF-8";
+@font-face { font-family: "mplus-2c-regular"; src: url("fonts/mplus-2c-regular.eot"); src: url("fonts/mplus-2c-regular.eot?#iefix") format("embedded-opentype"), url("fonts/mplus-2c-regular.woff") format("woff"), url("fonts/mplus-2c-regular.ttf") format("truetype"); }
+@font-face { font-family: "mplus-2c-medium"; src: url("fonts/mplus-2c-medium.eot"), url("fonts/mplus-2c-medium.woff") format("woff"), url("fonts/mplus-2c-medium.ttf") format("truetype"); }
+@font-face { font-family: "mplus-2c-heavy"; src: url("fonts/mplus-2c-heavy.eot"), url("fonts/mplus-2c-heavy.woff") format("woff"), url("fonts/mplus-2c-heavy.ttf") format("truetype"); }
+/*=============================================================
+ 共通
+=============================================================*/
+#home img { width: 100%; height: auto; }
+/*!  #talk
+================================================ */
+#talk { padding-bottom: 60px; background-image: -webkit-linear-gradient(0deg, #ed7741 0%, #db3a59 100%); }
+#talk .talkIn { width: 1560px; margin: 0 auto 55px; }
+#talk .talkIn .slideArea { min-height: 625px; }
+#talk .talkIn .img { float: right; width: 1200px; margin: 0; }
+#talk .talkIn .box { position: relative; float: left; width: 510px; margin-top: -550px; background-color: #fff; -webkit-transition: all .3s; transition: all .3s; }
+#talk .talkIn .box .sns { padding: 0 40px 20px; }
+#talk .talkIn .box .sns li { padding-right: 20px; }
+#talk .talkIn .box > a { display: block; position: relative; padding: 115px 40px 40px; color: #1f1f1f; text-decoration: none; -webkit-transition: all .3s; transition: all .3s; }
+#talk .talkIn .box > a:before { position: absolute; top: -20px; right: 0; left: 0; width: 350px; height: 105px; margin: auto; background: url(../img/common/tit_box01_n.png) 0 0 no-repeat; background-size: contain; content: ""; }
+#talk .talkIn .box > a .new { margin-bottom: 20px; }
+#talk .talkIn .box > a .new .ico { float: left; width: 48px; border: 2px solid #1f1f1f; background-color: #ffea5e; text-align: center; }
+#talk .talkIn .box > a .new .date { float: right; color: #cac9c9; font-size: 1.6rem; }
+#talk .talkIn .box > a .tit { line-height: 1.2; margin-bottom: 20px; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 3.0rem; }
+#talk .talkIn .box > a .txt { line-height: 1.7; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+@media screen and (min-width: 600px) { #talk .talkIn .box:hover { background-color: #1f1f1f; }  #talk .talkIn .box:hover a { position: relative; color: #fff; }  #talk .talkIn .box:hover a:before { position: absolute; top: -20px; right: 0; left: 0; width: 350px; height: 105px; margin: auto; background: url(../img/common/tit_box01_o.png) 0 0 no-repeat; background-size: contain; content: ""; }  #talk .talkIn .box:hover a .new .ico { background-color: #fff; color: #eb7143; } }
+#talk .listIn { width: 1200px; margin: 0 auto; }
+#talk .listIn .listArea { padding-bottom: 50px; }
+#talk .listIn .sns { margin-left: auto; padding: 0 0 10px; }
+#talk .listIn .sns li { padding-right: 20px; }
+#talk .listIn article { border: 10px solid #fff; background-color: #fff; -webkit-transition: all .3s; transition: all .3s; }
+#talk .listIn article + article { margin-top: 20px; }
+#talk .listIn article a { display: block; padding: 20px; color: #1f1f1f; text-decoration: none; }
+#talk .listIn article a .img { position: relative; float: left; width: 390px; }
+#talk .listIn article a .img .ico { position: absolute; top: 0; left: 0; width: 130px; padding: 5px 0; background-color: #1f1f1f; color: #fff; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.8rem; text-align: center; }
+#talk .listIn article a .box { float: right; width: 685px; }
+#talk .listIn article a .box .date { margin-bottom: 10px; color: #cac9c9; font-size: 1.6rem; }
+#talk .listIn article a .box .tit { line-height: 1.4; margin-bottom: 10px; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.2rem; }
+#talk .listIn article a .box .txt { line-height: 1.7; margin-bottom: 30px; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+@media screen and (min-width: 600px) { #talk .listIn article:hover { border: 10px solid #1f1f1f; } }
+#talk .listIn .more { width: 445px; margin: 0 auto; }
+#talk .listIn .more a { display: block; position: relative; padding: 19px 0; border: 2px solid #fff; color: #fff; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.1rem; text-decoration: none; text-align: center; -webkit-transition: all .3s; transition: all .3s; }
+#talk .listIn .more a:after { position: absolute; top: 45%; right: 5%; width: 7px; height: 11px; background: url(../img/common/ico_arw01.png) 0 0 no-repeat; background-size: contain; content: ""; }
+@media screen and (min-width: 600px) { #talk .listIn .more a:hover { background-color: #fff; color: #dc3f57; }  #talk .listIn .more a:hover:after { background: url(../img/common/ico_arw02.png) 0 0 no-repeat; background-size: contain; } }
+@media screen and (max-width: 599px) { #talk { padding: 0 0 25px; }  #talk .talkIn { width: 100%; margin-bottom: 20px; margin-left: 0; }  #talk .talkIn .slideArea { min-height: auto; }  #talk .talkIn .img { float: none; width: 100%; }  #talk .talkIn .pad015 { padding: 0 15px; }  #talk .talkIn .box { float: none; width: 100%; margin-top: 0; background: none; background-color: #fff; }  #talk .talkIn .box .sns { padding: 0 15px 10px; }  #talk .talkIn .box .sns li { width: auto; padding-right: 10px; }  #talk .talkIn .box > a { padding: 52px 20px 20px; text-decoration: none; }  #talk .talkIn .box > a:before { position: absolute; top: -33px; width: 250px; height: 67px; background: url(../img/common/tit_box01_n.png) 50% 50% no-repeat; background-size: contain; content: ""; }  #talk .talkIn .box > a .new { margin-bottom: 10px; }  #talk .talkIn .box > a .new .ico { width: 43px; padding-top: 2px; font-size: 1.1rem; }  #talk .talkIn .box > a .new .date { font-size: 1.2rem; }  #talk .talkIn .box > a .tit { margin-bottom: 15px; font-size: 1.8rem; }  #talk .talkIn .box > a .txt { display: none; }  #talk .listIn { width: 100%; }  #talk .listIn .listArea { padding: 0 15px 25px; }  #talk .listIn .sns { margin-left: inherit; }  #talk .listIn .sns li { padding-right: 10px; }  #talk .listIn article + article { margin-top: 15px; }  #talk .listIn article a { padding: 0; border: none; }  #talk .listIn article a .img { float: none; width: 100%; }  #talk .listIn article a .img .ico { position: absolute; top: 0; left: 0; width: 104px; padding: 5px 0; color: #fff; font-size: 1.4rem; }  #talk .listIn article a .box { float: none; width: 100%; padding: 15px 20px 15px; }  #talk .listIn article a .box .date { margin-bottom: 5px; font-size: 1.2rem; }  #talk .listIn article a .box .tit { margin-bottom: 15px; font-size: 1.5rem; }  #talk .listIn article a .box .txt { display: none; }  #talk .listIn .more { width: 100%; padding: 0 20px; }  #talk .listIn .more a { padding: 11px 0; font-size: 1.7rem; }  #talk .listIn .more a:after { top: 40%; } }
+/*!  #column
+================================================ */
+#column { padding: 65px 0; background: url(../img/home/bg_column01.png) 0 0 no-repeat; background-size: contain; }
+#column .columnIn { width: 1090px; margin: 0 auto; }
+#column .columnIn .mainTit { line-height: 1.2; margin-bottom: 50px; padding-left: 35px; background: url(../img/home/ico_tit01.png) 0 0 no-repeat; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.8rem; }
+#column .columnIn .mainTit .sub { display: inline-block; padding-left: 30px; font-size: 1.5rem; }
+#column .columnIn .mainTit .sub br { display: none; }
+#column .columnIn .list { overflow: hidden; margin: -10px -10px 30px -10px; }
+#column .columnIn .list article { position: relative; float: left; width: 550px; margin-bottom: 35px; border: 10px solid transparent; -webkit-transition: all .3s; transition: all .3s; }
+#column .columnIn .list article:nth-child(even) { float: right; }
+#column .columnIn .list article a { display: block; border: 1px solid #dddada; color: #1f1f1f; text-decoration: none; }
+#column .columnIn .list article a.new:before { position: absolute; top: 15px; right: 15px; width: 65px; height: 65px; background: url(../img/common/ico_new01.png) 0 0 no-repeat; background-size: contain; content: ""; }
+#column .columnIn .list article a .box { padding: 20px 40px 80px; background-color: #fff; }
+#column .columnIn .list article a .box .head { padding-bottom: 20px; }
+#column .columnIn .list article a .box .head .date { float: left; color: #cac9c9; }
+#column .columnIn .list article a .box .head .category { float: right; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.3rem; letter-spacing: 0; }
+#column .columnIn .list article a .box .head .category .cat { position: relative; }
+#column .columnIn .list article a .box .head .category .cat:before { position: absolute; bottom: -3px; left: 0; width: 100%; height: 3px; background-image: -webkit-linear-gradient(bottom, #66c3fe 0%, #247af9 100%); background-image: linear-gradient(0deg, #66c3fe 0%, #247af9 100%); content: ""; }
+#column .columnIn .list article a .box .head .category .name { position: relative; }
+#column .columnIn .list article a .box .head .category .name:before { position: absolute; bottom: -3px; left: 0; width: 100%; height: 3px; background-image: -webkit-linear-gradient(bottom, #02c3ac 0%, #6be4cc 0%, #01af9a 100%); background-image: linear-gradient(0deg, #02c3ac 0%, #6be4cc 0%, #01af9a 100%); content: ""; }
+#column .columnIn .list article a .box .tit { line-height: 1.4; margin-bottom: 10px; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.4rem; }
+#column .columnIn .list article a .box .txt { line-height: 1.7; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+@media screen and (min-width: 600px) { #column .columnIn .list article:hover { border: 10px solid #0db5a0; } }
+#column .columnIn .list article .sns { position: absolute; bottom: 30px; left: 40px; }
+#column .columnIn .list article .sns li { padding-right: 20px; }
+#column .columnIn .more { width: 445px; margin: 0 auto; }
+#column .columnIn .more a { display: block; position: relative; padding: 19px 0; border: 2px solid #1f1f1f; color: #1f1f1f; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.1rem; text-decoration: none; text-align: center; -webkit-transition: all .3s; transition: all .3s; }
+#column .columnIn .more a:after { position: absolute; top: 45%; right: 5%; width: 7px; height: 11px; background: url(../img/common/ico_arw03.png) 0 0 no-repeat; background-size: contain; content: ""; }
+@media screen and (min-width: 600px) { #column .columnIn .more a:hover { background-color: #1f1f1f; color: #fff; }  #column .columnIn .more a:hover:after { background: url(../img/common/ico_arw01.png) 0 0 no-repeat; background-size: contain; } }
+@media screen and (max-width: 599px) { #column { padding: 25px 15px; background: url(../img/home/bg_column02.png) 0 0 no-repeat; background-size: contain; }  #column .columnIn { width: 100%; }  #column .columnIn .mainTit { margin-bottom: 30px; padding-left: 22px; background: url(../img/home/ico_tit01.png) 0 0 no-repeat; background-size: 13px auto; font-size: 1.8rem; }  #column .columnIn .mainTit .sub { display: block; line-height: 1.6; margin-left: -22px; padding-top: 10px; padding-left: 0; font-size: 1.1rem; }  #column .columnIn .mainTit .sub br { display: block; }  #column .columnIn .list { margin: 0 0 25px 0; margin-bottom: 25px; }  #column .columnIn .list article { float: none; width: 100%; margin-bottom: 0; padding: 15px 0; border: none; border-bottom: 2px solid #dddada; }  #column .columnIn .list article:nth-child(even) { float: none; }  #column .columnIn .list article a { border: none; }  #column .columnIn .list article a.new:before { top: 5px; right: 0; width: 35px; height: 35px; }  #column .columnIn .list article a .img { float: right; width: 48%; }  #column .columnIn .list article a .box { float: left; width: 48%; padding: 0; }  #column .columnIn .list article a .box .head { padding-bottom: 10px; }  #column .columnIn .list article a .box .head .date { float: none; margin-bottom: 5px; font-size: 1.2rem; }  #column .columnIn .list article a .box .head .category { float: none; font-size: 1.0rem; }  #column .columnIn .list article a .box .tit { line-height: 1.3; margin-bottom: 0; font-size: 1.5rem; }  #column .columnIn .list article a .box .txt { display: none; }  #column .columnIn .list article .sns { position: static; padding: 10px 0 0 0; }  #column .columnIn .list article .sns li { padding-right: 10px; }  #column .columnIn .more { width: 100%; padding: 0 15px; }  #column .columnIn .more a { padding: 11px 0; font-size: 1.7rem; }  #column .columnIn .more a:after { top: 40%; } }
+#hopecolumn #column { padding: 0; background: none; }
+#hopecolumn #column .columnIn { width: 700px; }
+#hopecolumn #column .columnIn .bgMain { position: relative; margin-bottom: 30px; }
+#hopecolumn #column .columnIn .bgMain .txt { position: absolute; bottom: 35px; left: 30px; width: 430px; line-height: 1.6; color: #fff; font-size: 1.3rem; }
+#hopecolumn #column .columnIn .mainTit { margin-bottom: 30px; }
+#hopecolumn #column .columnIn .mainTit .sub { display: block; margin: 0 0 0 -35px; padding: 20px 0 0 0; padding-left: 0; }
+#hopecolumn #column .columnIn .list article { width: 360px; }
+#hopecolumn #column .columnIn .list article a .box { padding: 20px 10px 80px; }
+#hopecolumn #column .columnIn .list article .sns { left: 10px; }
+#hopecolumn #column .columnIn .list article .sns li { padding-right: 5px; }
+@media screen and (max-width: 599px) { #hopecolumn #column { padding: 15px; background: none; }  #hopecolumn #column .columnIn { width: 100%; }  #hopecolumn #column .columnIn .bgMain { margin-bottom: 15px; }  #hopecolumn #column .columnIn .bgMain .txt { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; line-height: 1.3; padding: 15px 10px; font-size: 1.0rem; }  #hopecolumn #column .columnIn .mainTit { margin-bottom: 30px; }  #hopecolumn #column .columnIn .mainTit .sub { line-height: 1.6; margin-left: -22px; padding-top: 10px; padding-left: 0; font-size: 1.1rem; }  #hopecolumn #column .columnIn .list article { width: 100%; }  #hopecolumn #column .columnIn .list article a .box { padding: 0; }  #hopecolumn #column .columnIn .list article .sns { left: 10px; }  #hopecolumn #column .columnIn .list article .sns li { padding-right: 5px; } }
+/*!  #hopetalk #single
+================================================ */
+#hopetalk #single .mainImg { text-align: center; }
+#hopetalk #single .mainImg img { width: 100%; height: auto; }
+#hopetalk #single .box { position: relative; width: 1200px; margin: 0 auto; padding: 0 50px 50px; background-color: #fff; }
+#hopetalk #single .hopeTalk { display: inline-block; width: 350px; margin-bottom: 80px; margin-left: -50px; padding: 13px 0; background-color: #1f1f1f; color: #fff; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-weight: bold; font-size: 4.8rem; text-align: center; }
+#hopetalk #single .haed { margin-bottom: 55px; padding-bottom: 30px; border-bottom: 1px solid #1f1f1f; }
+#hopetalk #single .haed .new { margin-bottom: 20px; }
+#hopetalk #single .haed .new .ico { display: inline-block; width: 48px; margin-right: 20px; padding: 3px 0; border: 2px solid #1f1f1f; background-color: #ffea5e; font-weight: bold; text-align: center; }
+#hopetalk #single .haed .new .date { display: inline-block; line-height: 1.5; color: #cac9c9; font-size: 1.6rem; }
+#hopetalk #single .haed .tit { margin-bottom: 30px; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 3.0rem; }
+#hopetalk #single .haed .sns li { padding-right: 20px; text-align: right; }
+#hopetalk #single .singleIn { padding: 0 50px 100px; background: url(../img/hopetalk/bg_dotted01.png) 0 100% repeat-x; }
+#hopetalk #single .singleIn .subTit01 , #hopetalk #single .singleIn h3 { margin: 45px 0; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.6rem; }
+#hopetalk #single .singleIn .subTit02 , #hopetalk #single .singleIn h4 { margin: 30px 0; color: #f40009; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.8rem; }
+#hopetalk #single .singleIn .areaTxt { line-height: 1.7; overflow: hidden; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.5rem; }
+#hopetalk #single .singleIn .areaTxt p + p { margin-top: 10px; }
+#hopetalk #single .singleIn .areaTxt strong , #hopetalk #single .singleIn .areaTxt em { font-weight: bold; }
+#hopetalk #single .singleIn .sec01 .sec01Box01 { margin-bottom: 50px; }
+#hopetalk #single .singleIn .sec01 .left { float: left; }
+#hopetalk #single .singleIn .sec01 .right { float: right; }
+#hopetalk #single .singleIn .sec01 .img { width: 380px; }
+#hopetalk #single .singleIn .sec01 .txt { width: 575px; line-height: 1.7; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+#hopetalk #single .singleIn .sec02 .txt { line-height: 1.7; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+#hopetalk #single .singleIn .sec02 .img { padding: 50px 0; }
+#hopetalk #single .profile { position: relative; padding: 45px 0 50px; }
+#hopetalk #single .profile .profileIn { width: 877px; margin-left: auto; }
+#hopetalk #single .profile .profileIn .img { position: absolute; top: 50px; left: 15px; width: 160px; height: 160px; overflow: hidden; border-radius: 50%; background-color: #000; }
+#hopetalk #single .profile .profileIn .head { margin-bottom: 25px; }
+#hopetalk #single .profile .profileIn .head .name { float: left; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.6rem; }
+#hopetalk #single .profile .profileIn .head .url { float: right; width: 380px; }
+#hopetalk #single .profile .profileIn .head .url li { float: left; width: 120px; }
+#hopetalk #single .profile .profileIn .head .url li + li { margin-left: 10px; }
+#hopetalk #single .profile .profileIn .head .url li a { display: block; padding: 5px 0; border: 2px solid #1f1f1f; color: #1f1f1f; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.6rem; text-decoration: none; text-align: center; }
+#hopetalk #single .profile .profileIn .txt { line-height: 1.7; margin-bottom: 20px; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+#hopetalk #single .profile .profileIn .work { padding: 30px; background-color: #f2e8e6; }
+#hopetalk #single .profile .profileIn .work .workTit01 { margin-bottom: 10px; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-weight: bold; }
+#hopetalk #single .profile .profileIn .work .workList li { font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; }
+#hopetalk #single .profile .profileIn .work .workList li + li { margin-top: 10px; }
+#hopetalk #single .profile .profileIn .work .workList li span { display: inline-block; }
+#hopetalk #single .profile .profileIn .work .workList li .year { width: 75px; }
+#hopetalk #single .snsBtm { padding-top: 50px; }
+#hopetalk #single .snsBtm .sns { margin: 0 auto; }
+#hopetalk #single .snsBtm .sns li { padding-right: 20px; }
+#hopetalk #single #backNumber { width: 1200px; margin: 60px auto 0; }
+#hopetalk #single #backNumber .tit { margin-bottom: 45px; color: #fff; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 4.8rem; text-align: center; }
+#hopetalk #single #backNumber .list > li { float: left; width: 380px; background-color: #fff; }
+#hopetalk #single #backNumber .list > li + li { margin-left: 30px; }
+#hopetalk #single #backNumber .list > li .sns { padding: 0 25px 20px; }
+#hopetalk #single #backNumber .list > li .sns li { padding-right: 20px; }
+#hopetalk #single #backNumber .list > li > a { display: block; padding: 40px 25px; color: #1f1f1f; text-decoration: none; }
+#hopetalk #single #backNumber .list > li > a .img { position: relative; margin-bottom: 20px; }
+#hopetalk #single #backNumber .list > li > a .img .ico { display: inline-block; position: absolute; top: 0; left: 0; width: 130px; padding: 5px 0; background-color: #1f1f1f; color: #fff; font-family: "mplus-2c-medium", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 1.8rem; text-align: center; }
+#hopetalk #single #backNumber .list > li > a .date { margin-bottom: 10px; color: #cac9c9; font-size: 1.6rem; }
+#hopetalk #single #backNumber .list > li > a .subTit01 , #hopetalk #single #backNumber .list > li > a h3 { line-height: 1.3; font-family: "mplus-2c-heavy", "メイリオ", Meiryo, "游明朝", YuMincho, "Times New Roman", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif; font-size: 2.2rem; }
+@media screen and (max-width: 599px) { #hopetalk #single { padding: 0 15px; }  #hopetalk #single .mainImg { width: auto; height: auto; overflow: auto; margin: 0 -15px; }  #hopetalk #single .box { width: 100%; margin: 0 auto 0; padding: 0 15px 25px; }  #hopetalk #single .hopeTalk { width: 185px; margin-bottom: 20px; margin-left: -15px; padding: 10px 0; font-size: 2.0rem; }  #hopetalk #single .haed { margin-bottom: 25px; padding-bottom: 15px; }  #hopetalk #single .haed .new { margin-bottom: 10px; }  #hopetalk #single .haed .new .ico { margin-right: 10px; border: 1px solid #1f1f1f; font-size: 1.2rem; }  #hopetalk #single .haed .new .date { font-size: 1.3rem; }  #hopetalk #single .haed .tit { margin-bottom: 15px; font-size: 2.0rem; }  #hopetalk #single .haed .sns li { padding-right: 10px; }  #hopetalk #single .singleIn { padding: 0 0 30px; }  #hopetalk #single .singleIn .subTit01 , #hopetalk #single .singleIn h3 { margin-bottom: 20px; font-size: 1.6rem; }  #hopetalk #single .singleIn .subTit02 , #hopetalk #single .singleIn h4 { margin-bottom: 15px; font-size: 1.4rem; }  #hopetalk #single .singleIn .areaTxt { font-size: 1.3rem; }  #hopetalk #single .singleIn .sec01 .sec01Box01 { margin-bottom: 25px; }  #hopetalk #single .singleIn .sec01 .left { float: none; }  #hopetalk #single .singleIn .sec01 .right { float: none; }  #hopetalk #single .singleIn .sec01 .img { width: 100%; margin-bottom: 10px; }  #hopetalk #single .singleIn .sec01 .txt { width: 100%; line-height: 1.5; }  #hopetalk #single .singleIn .sec02 .txt { line-height: 1.5; }  #hopetalk #single .singleIn .sec02 .img { padding: 25px 0; }  #hopetalk #single .profile { padding: 20px 0 25px; }  #hopetalk #single .profile .profileIn { width: 100%; margin-left: auto; }  #hopetalk #single .profile .profileIn .img { position: static; width: 160px; height: 160px; margin: 0 auto 10px; }  #hopetalk #single .profile .profileIn .head { margin-bottom: 15px; }  #hopetalk #single .profile .profileIn .head .name { float: none; margin-bottom: 10px; font-size: 2.0rem; text-align: center; }  #hopetalk #single .profile .profileIn .head .url { float: none; width: 100%; }  #hopetalk #single .profile .profileIn .head .url li { float: none; width: 100%; }  #hopetalk #single .profile .profileIn .head .url li + li { margin-top: 10px; margin-left: 0; }  #hopetalk #single .profile .profileIn .head .url li a { padding: 10px 0; font-size: 1.4rem; }  #hopetalk #single .profile .profileIn .txt { line-height: 1.5; margin-bottom: 10px; }  #hopetalk #single .profile .profileIn .work { padding: 15px; }  #hopetalk #single .profile .profileIn .work .workTit01 { margin-bottom: 5px; }  #hopetalk #single .profile .profileIn .work .workList li + li { margin-top: 10px; }  #hopetalk #single .profile .profileIn .work .workList li span { display: block; line-height: 1.4; }  #hopetalk #single .profile .profileIn .work .workList li .year { width: 100%; }  #hopetalk #single .snsBtm { padding-top: 25px; }  #hopetalk #single .snsBtm .sns li { padding-right: 10px; }  #hopetalk #single #backNumber { width: 100%; margin: 30px auto 0; }  #hopetalk #single #backNumber .tit { margin-bottom: 20px; font-size: 2.8rem; }  #hopetalk #single #backNumber .list > li { float: none; width: 100%; }  #hopetalk #single #backNumber .list > li + li { margin-top: 15px; margin-left: 0; }  #hopetalk #single #backNumber .list > li .sns { padding: 0 15px 10px; }  #hopetalk #single #backNumber .list > li .sns li { padding-right: 10px; }  #hopetalk #single #backNumber .list > li > a { padding: 20px 15px; }  #hopetalk #single #backNumber .list > li > a .img { margin-bottom: 10px; }  #hopetalk #single #backNumber .list > li > a .img .ico { font-size: 1.4rem; }  #hopetalk #single #backNumber .list > li > a .date { margin-bottom: 5px; font-size: 1.4rem; }  #hopetalk #single #backNumber .list > li > a .subTit01 , #hopetalk #single #backNumber .list > li > a h3 { margin-bottom: 10px; font-size: 1.8rem; } }
+/*!  #hopecolumn #single
+================================================ */
+#hopecolumn img { width: 100%; height: auto; }
+#hopecolumn #single .singleIn { margin-bottom: 30px; }
+#hopecolumn #single .singleIn .bgMain { position: relative; margin-bottom: 30px; }
+#hopecolumn #single .singleIn .bgMain .txt { position: absolute; bottom: 35px; left: 30px; width: 430px; line-height: 1.6; margin-bottom: 0; color: #fff; font-size: 1.3rem; }
+#hopecolumn #single .singleIn .tit { margin-bottom: 20px; border-bottom: 2px solid #555182; font-weight: bold; font-size: 2.0rem; }
+#hopecolumn #single .singleIn .head { margin-bottom: 20px; }
+#hopecolumn #single .singleIn .head .date { float: left; color: #cecece; font-weight: bold; font-size: 1.8rem; }
+#hopecolumn #single .singleIn .head .category { float: right; }
+#hopecolumn #single .singleIn .head .category li { float: left; }
+#hopecolumn #single .singleIn .head .category li:after { content: ","; }
+#hopecolumn #single .singleIn .head .category li:last-child:after { content: none; }
+#hopecolumn #single .singleIn .head .category li a { display: inline-block; margin-left: 5px; color: #0152a5; }
+@media screen and (min-width: 600px) { #hopecolumn #single .singleIn .head .category li a:hover { text-decoration: none; } }
+#hopecolumn #single .singleIn .sns01 { margin-bottom: 20px; padding: 20px 0; border-bottom: 1px solid #d5d5d5; }
+#hopecolumn #single .singleIn .sns02 { padding: 20px 0; border-top: 1px solid #d5d5d5; border-bottom: 1px solid #d5d5d5; }
+#hopecolumn #single .singleIn .sns { margin: auto; }
+#hopecolumn #single .singleIn .sns li { padding-right: 20px; }
+#hopecolumn #single .singleIn .txt { line-height: 1.8; margin-bottom: 30px; font-size: 1.3rem; }
+#hopecolumn #single .singleIn .subTit01 { margin-bottom: 20px; padding: 20px 20px 16px 20px; background-color: #f1f0f0; font-weight: bold; font-size: 1.8rem; }
+#hopecolumn #single .singleIn .subTit02 { margin-bottom: 20px; padding-left: 28px; background: url(../img/hopecolumn/ico_tit01.png) 0 50% no-repeat; color: #0152a5; font-weight: bold; font-size: 1.8rem; }
+#hopecolumn #single .relete { margin-top: 50px; margin-bottom: 100px; }
+#hopecolumn #single .relete .tit { margin-bottom: 20px; padding-bottom: 10px; padding-left: 35px; border-bottom: 2px solid #555182; background: url(../img/hopecolumn/ico_relete01.png) 0 0 no-repeat; font-weight: bold; font-size: 2.0rem; }
+#hopecolumn #single .relete .list > li { float: left; width: 224px; }
+#hopecolumn #single .relete .list > li + li { margin-left: 14px; }
+#hopecolumn #single .relete .list > li > a { display: block; text-decoration: none; }
+#hopecolumn #single .relete .list > li > a .img { margin-bottom: 10px; }
+#hopecolumn #single .relete .list > li > a .date { margin-bottom: 10px; color: #cecece; font-weight: bold; }
+#hopecolumn #single .relete .list > li > a .subTit01 { line-height: 1.5; padding-bottom: 15px; border-bottom: 1px solid #d5d5d5; color: #333; font-weight: bold; }
+#hopecolumn #single .relete .list > li > a:hover { opacity: .7; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; }
+#hopecolumn #single .relete .list > li .category { padding-top: 10px; }
+#hopecolumn #single .relete .list > li .category li { display: inline-block; margin-bottom: 5px; }
+#hopecolumn #single .relete .list > li .category li:after { content: ","; }
+#hopecolumn #single .relete .list > li .category li:last-child:after { content: none; }
+#hopecolumn #single .relete .list > li .category li a { color: #0152a5; font-size: 1.2rem; }
+@media screen and (min-width: 600px) { #hopecolumn #single .relete .list > li .category li a:hover { text-decoration: none; } }
+@media screen and (max-width: 599px) { #hopecolumn #single { width: 100%; padding: 15px; }  #hopecolumn #single .singleIn { margin-bottom: 15px; }  #hopecolumn #single .singleIn .bgMain { margin-bottom: 15px; }  #hopecolumn #single .singleIn .bgMain .txt { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; line-height: 1.3; padding: 15px 10px; font-size: 1.0rem; }  #hopecolumn #single .singleIn .tit { line-height: 1.3; margin-bottom: 10px; font-size: 1.6rem; }  #hopecolumn #single .singleIn .head { margin-bottom: 10px; }  #hopecolumn #single .singleIn .head .date { float: none; margin-bottom: 10px; font-size: 1.4rem; }  #hopecolumn #single .singleIn .head .category { float: none; }  #hopecolumn #single .singleIn .head .category li { float: left; }  #hopecolumn #single .singleIn .head .category li + li:after { content: none; }  #hopecolumn #single .singleIn .head .category li + li:before { content: ","; }  #hopecolumn #single .singleIn .head .category li a { margin-right: 5px; margin-left: 0; }  #hopecolumn #single .singleIn .sns01 { margin-bottom: 10px; padding: 10px 0; }  #hopecolumn #single .singleIn .sns02 { padding: 10px 0; }  #hopecolumn #single .singleIn .sns li { padding-right: 10px; }  #hopecolumn #single .singleIn .txt { line-height: 1.6; margin-bottom: 15px; }  #hopecolumn #single .singleIn .subTit01 { margin-bottom: 10px; padding: 10px 10px 8px 10px; font-size: 1.5rem; }  #hopecolumn #single .singleIn .subTit02 { margin-bottom: 10px; padding-left: 14px; background: url(../img/hopecolumn/ico_tit01.png) 0 50% no-repeat; background-size: 10px; font-size: 1.5rem; }  #hopecolumn #single .relete { margin-top: 25px; margin-bottom: 50px; }  #hopecolumn #single .relete .tit { margin-bottom: 10px; padding-bottom: 5px; padding-left: 15px; background: url(../img/hopecolumn/ico_relete01.png) 0 0 no-repeat; background-size: 12px auto; font-size: 1.5rem; }  #hopecolumn #single .relete .list > li { float: none; width: 100%; }  #hopecolumn #single .relete .list > li + li { margin-top: 10px; margin-left: 0; }  #hopecolumn #single .relete .list > li > a .img { margin-bottom: 5px; }  #hopecolumn #single .relete .list > li > a .date { margin-bottom: 5px; }  #hopecolumn #single .relete .list > li > a .subTit01 { padding-bottom: 10px; }  #hopecolumn #single .relete .list > li .category { padding-top: 10px; } }
+#hopetalk #single .areaTxt .alignleft { float: left; width: auto; max-width: 100%; margin: 0 20px 20px 0; }
+#hopetalk #single .areaTxt .alignright { float: right; width: auto; max-width: 100%; margin: 0 0 20px 20px; }
+#hopetalk #single .areaTxt .aligncenter { width: auto; max-width: 100%; margin: 0 auto; text-align: center; }
+@media screen and (max-width: 599px) { #hopetalk #single .areaTxt .alignleft { float: none; width: 100%; margin: 0 0 10px 0; }  #hopetalk #single .areaTxt .alignright { float: none; width: 100%; margin: 0 0 10px 0; } }
+/*!  ホームにバナー追加　2017/12/20
+================================================ */
+.archive_banner_pc { display: block !important; width: 1200px; margin: 0 auto 20px auto;}
+.archive_banner_sp { display: none !important;}
+@media only screen and (max-width: 599px) {
+.archive_banner_pc { display: none !important; }
+.archive_banner_sp { display: block !important; width: auto; margin: 0 auto 20px auto; padding:0 18px;}
+}
+	
+/*# sourceMappingURL=maps/unique.css.map */
