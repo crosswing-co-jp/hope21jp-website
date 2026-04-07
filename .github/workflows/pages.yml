@@ -29,11 +29,6 @@ jobs:
 
           echo "=== Rewriting HTML paths ==="
 
-          # HTML: 本番絶対URL → ベースパス付き相対パス
-          find . -name "*.html" -print0 | xargs -0 sed -i \
-            -e "s|https://hope21\.jp/wp-content/|${BASE}/wp-content/|g" \
-            -e "s|https://hope21\.jp/wp-includes/|${BASE}/wp-includes/|g"
-
           # HTML: 相対パス ../../wp-content/ 等 → 絶対パス
           find . -name "*.html" -print0 | xargs -0 sed -i -E \
             -e "s|(\.\./)+(wp-content/)|${BASE}/\2|g" \
@@ -45,6 +40,32 @@ jobs:
             -e 's|src="wp-content/|src="'"${BASE}"'/wp-content/|g' \
             -e 's|href="wp-includes/|href="'"${BASE}"'/wp-includes/|g' \
             -e 's|src="wp-includes/|src="'"${BASE}"'/wp-includes/|g'
+
+          # HTML: ルート絶対パス href="/foo/" → href="/base/foo/"
+          # JSON-LD内のURLは除外するため、scriptタグ外のみ対象
+          python3 << 'PYEOF'
+          import os, re
+          base = "/hope21jp-website"
+          for root, dirs, files in os.walk("."):
+              dirs[:] = [d for d in dirs if not d.startswith(".")]
+              for f in files:
+                  if not f.endswith(".html"):
+                      continue
+                  path = os.path.join(root, f)
+                  with open(path, "r") as fh:
+                      content = fh.read()
+                  parts = re.split(r'(<script[^>]*>.*?</script>)', content, flags=re.DOTALL)
+                  new_parts = []
+                  for part in parts:
+                      if part.startswith("<script"):
+                          new_parts.append(part)
+                      else:
+                          part = re.sub(r'(href|src|action)="/(?!/' + base.lstrip("/") + r')', r'\1="' + base + r'/', part)
+                          part = re.sub(r"location\.href='/(?!/" + base.lstrip("/") + r"')", "location.href='" + base + "/", part)
+                          new_parts.append(part)
+                  with open(path, "w") as fh:
+                      fh.write("".join(new_parts))
+          PYEOF
 
           echo "=== Rewriting CSS paths ==="
 
