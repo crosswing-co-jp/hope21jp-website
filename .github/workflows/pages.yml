@@ -23,34 +23,37 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Rewrite paths for GitHub Pages subdirectory
+        shell: bash
         run: |
-          REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          BASE="/${REPO_NAME}"
+          BASE="/hope21jp-website"
 
-          # HTML: 相対パスの ../../../wp-content, ../wp-includes 等を絶対パスに変換
-          find . -name "*.html" -exec sed -i -E \
-            -e "s|(href\|src\|content)=\"(\.\./)+wp-content/|\1=\"${BASE}/wp-content/|g" \
-            -e "s|(href\|src\|content)=\"(\.\./)+wp-includes/|\1=\"${BASE}/wp-includes/|g" \
-            -e "s|(href\|src\|content)=\"(\.\./)+wp-json/|\1=\"${BASE}/wp-json/|g" \
-            {} +
+          echo "=== Rewriting HTML paths ==="
 
-          # HTML: ルート相対パス（/なし）にベースパスを付与
-          find . -name "*.html" -exec sed -i -E \
-            -e "s|(href\|src)=\"wp-content/|\1=\"${BASE}/wp-content/|g" \
-            -e "s|(href\|src)=\"wp-includes/|\1=\"${BASE}/wp-includes/|g" \
-            {} +
+          # HTML: 本番絶対URL → ベースパス付き相対パス
+          find . -name "*.html" -print0 | xargs -0 sed -i \
+            -e "s|https://hope21\.jp/wp-content/|${BASE}/wp-content/|g" \
+            -e "s|https://hope21\.jp/wp-includes/|${BASE}/wp-includes/|g"
 
-          # CSS: 絶対パス url(/wp-content/...) にベースパスを付与
-          find . -name "*.css" -exec sed -i -E \
-            -e "s|url\(/wp-content/|url(${BASE}/wp-content/|g" \
-            -e "s|url\(/wp-includes/|url(${BASE}/wp-includes/|g" \
-            {} +
+          # HTML: 相対パス ../../wp-content/ 等 → 絶対パス
+          find . -name "*.html" -print0 | xargs -0 sed -i -E \
+            -e "s|(\.\./)+(wp-content/)|${BASE}/\2|g" \
+            -e "s|(\.\./)+(wp-includes/)|${BASE}/\2|g"
 
-          # CSS: 相対パス url(../wp-content/...) を絶対パスに変換
-          find . -name "*.css" -exec sed -i -E \
-            -e "s|url\((\.\./)+wp-content/|url(${BASE}/wp-content/|g" \
-            -e "s|url\((\.\./)+wp-includes/|url(${BASE}/wp-includes/|g" \
-            {} +
+          # HTML: ルート直接参照 href="wp-content/..." → ベースパス付き
+          find . -name "*.html" -print0 | xargs -0 sed -i \
+            -e 's|href="wp-content/|href="'"${BASE}"'/wp-content/|g' \
+            -e 's|src="wp-content/|src="'"${BASE}"'/wp-content/|g' \
+            -e 's|href="wp-includes/|href="'"${BASE}"'/wp-includes/|g' \
+            -e 's|src="wp-includes/|src="'"${BASE}"'/wp-includes/|g'
+
+          echo "=== Rewriting CSS paths ==="
+
+          # CSS: url(/wp-content/...) → url(/base/wp-content/...)
+          find . -name "*.css" -print0 | xargs -0 sed -i \
+            -e "s|url(/wp-content/|url(${BASE}/wp-content/|g" \
+            -e "s|url(/wp-includes/|url(${BASE}/wp-includes/|g"
+
+          echo "=== Done ==="
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
