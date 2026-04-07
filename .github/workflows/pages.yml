@@ -25,56 +25,84 @@ jobs:
       - name: Rewrite paths for GitHub Pages subdirectory
         shell: bash
         run: |
-          BASE="/hope21jp-website"
-
-          echo "=== Rewriting HTML paths ==="
-
-          # HTML: 相対パス ../../wp-content/ 等 → 絶対パス
-          find . -name "*.html" -print0 | xargs -0 sed -i -E \
-            -e "s|(\.\./)+(wp-content/)|${BASE}/\2|g" \
-            -e "s|(\.\./)+(wp-includes/)|${BASE}/\2|g"
-
-          # HTML: ルート直接参照 href="wp-content/..." → ベースパス付き
-          find . -name "*.html" -print0 | xargs -0 sed -i \
-            -e 's|href="wp-content/|href="'"${BASE}"'/wp-content/|g' \
-            -e 's|src="wp-content/|src="'"${BASE}"'/wp-content/|g' \
-            -e 's|href="wp-includes/|href="'"${BASE}"'/wp-includes/|g' \
-            -e 's|src="wp-includes/|src="'"${BASE}"'/wp-includes/|g'
-
-          # HTML: ルート絶対パス href="/foo/" → href="/base/foo/"
-          # JSON-LD内のURLは除外するため、scriptタグ外のみ対象
           python3 << 'PYEOF'
           import os, re
-          base = "/hope21jp-website"
+
+          BASE = "/hope21jp-website"
+
+          def rewrite_html_part(part):
+              """Rewrite non-script HTML content"""
+              # 相対パス ../../wp-content/ → /base/wp-content/
+              part = re.sub(r'(\.\./)+wp-content/', BASE + '/wp-content/', part)
+              part = re.sub(r'(\.\./)+wp-includes/', BASE + '/wp-includes/', part)
+
+              # href="wp-content/..." (ベースパスなし直接参照)
+              part = re.sub(r'(href|src)="wp-content/', r'\1="' + BASE + '/wp-content/', part)
+              part = re.sub(r'(href|src)="wp-includes/', r'\1="' + BASE + '/wp-includes/', part)
+
+              # href="/foo/" ルート絶対パス → /base/foo/
+              # ただし既にベースパスが付いているものは除外
+              part = re.sub(
+                  r'(href|src|action)="/(?!' + re.escape(BASE.lstrip('/')) + r'/)',
+                  r'\1="' + BASE + '/',
+                  part
+              )
+              # location.href='/foo/' → location.href='/base/foo/'
+              part = re.sub(
+                  r"location\.href='/(?!" + re.escape(BASE.lstrip('/')) + r"/)",
+                  "location.href='" + BASE + "/",
+                  part
+              )
+              return part
+
+          count = 0
           for root, dirs, files in os.walk("."):
               dirs[:] = [d for d in dirs if not d.startswith(".")]
               for f in files:
                   if not f.endswith(".html"):
                       continue
                   path = os.path.join(root, f)
-                  with open(path, "r") as fh:
+                  with open(path, "r", encoding="utf-8", errors="ignore") as fh:
                       content = fh.read()
+                  original = content
+
+                  # Split on script tags to preserve JSON-LD URLs
                   parts = re.split(r'(<script[^>]*>.*?</script>)', content, flags=re.DOTALL)
                   new_parts = []
                   for part in parts:
-                      if part.startswith("<script"):
+                      if re.match(r'<script', part):
                           new_parts.append(part)
                       else:
-                          part = re.sub(r'(href|src|action)="/(?!/' + base.lstrip("/") + r')', r'\1="' + base + r'/', part)
-                          part = re.sub(r"location\.href='/(?!/" + base.lstrip("/") + r"')", "location.href='" + base + "/", part)
-                          new_parts.append(part)
-                  with open(path, "w") as fh:
-                      fh.write("".join(new_parts))
-          PYEOF
+                          new_parts.append(rewrite_html_part(part))
+                  content = "".join(new_parts)
 
-          echo "=== Rewriting CSS paths ==="
+                  if content != original:
+                      with open(path, "w", encoding="utf-8") as fh:
+                          fh.write(content)
+                      count += 1
+
+          print(f"HTML: rewrote {count} files")
 
           # CSS: url(/wp-content/...) → url(/base/wp-content/...)
-          find . -name "*.css" -print0 | xargs -0 sed -i \
-            -e "s|url(/wp-content/|url(${BASE}/wp-content/|g" \
-            -e "s|url(/wp-includes/|url(${BASE}/wp-includes/|g"
+          css_count = 0
+          for root, dirs, files in os.walk("."):
+              dirs[:] = [d for d in dirs if not d.startswith(".")]
+              for f in files:
+                  if not f.endswith(".css"):
+                      continue
+                  path = os.path.join(root, f)
+                  with open(path, "r", encoding="utf-8", errors="ignore") as fh:
+                      content = fh.read()
+                  original = content
+                  content = content.replace("url(/wp-content/", f"url({BASE}/wp-content/")
+                  content = content.replace("url(/wp-includes/", f"url({BASE}/wp-includes/")
+                  if content != original:
+                      with open(path, "w", encoding="utf-8") as fh:
+                          fh.write(content)
+                      css_count += 1
 
-          echo "=== Done ==="
+          print(f"CSS: rewrote {css_count} files")
+          PYEOF
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
