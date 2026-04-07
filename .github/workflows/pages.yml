@@ -22,10 +22,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Insert base tag for GitHub Pages
+      - name: Rewrite paths for GitHub Pages subdirectory
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          find . -name "*.html" -exec sed -i "s|<head>|<head><base href=\"/${REPO_NAME}/\">|g" {} +
+          BASE="/${REPO_NAME}"
+
+          # 相対パスの ../../../wp-content, ../wp-includes 等を絶対パスに変換
+          find . -name "*.html" -exec sed -i -E \
+            -e "s|(href\|src\|content)=\"(\.\./)+wp-content/|\1=\"${BASE}/wp-content/|g" \
+            -e "s|(href\|src\|content)=\"(\.\./)+wp-includes/|\1=\"${BASE}/wp-includes/|g" \
+            -e "s|(href\|src\|content)=\"(\.\./)+wp-json/|\1=\"${BASE}/wp-json/|g" \
+            {} +
+
+          # ルート相対パス（/で始まらない直接参照）にベースパスを付与
+          # href="wp-content/..." → href="/repo/wp-content/..."
+          find . -name "*.html" -exec sed -i -E \
+            -e "s|(href\|src)=\"wp-content/|\1=\"${BASE}/wp-content/|g" \
+            -e "s|(href\|src)=\"wp-includes/|\1=\"${BASE}/wp-includes/|g" \
+            {} +
+
+          # CSS内の相対パス修正
+          find . -name "*.css" -exec sed -i -E \
+            -e "s|url\((\.\./)+wp-content/|url(${BASE}/wp-content/|g" \
+            {} +
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
