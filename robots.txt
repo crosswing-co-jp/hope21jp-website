@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+
+Sitemap: https://hope21.jp/sitemap.xml
