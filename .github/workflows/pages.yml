@@ -29,6 +29,7 @@ jobs:
           import os, re
 
           BASE = "/hope21jp-website"
+          BASE_ESC = re.escape(BASE.lstrip("/"))
 
           def rewrite_html_part(part):
               """Rewrite non-script HTML content"""
@@ -41,18 +42,29 @@ jobs:
               part = re.sub(r'(href|src)="wp-includes/', r'\1="' + BASE + '/wp-includes/', part)
 
               # href="/foo/" ルート絶対パス → /base/foo/
-              # ただし既にベースパスが付いているものは除外
               part = re.sub(
-                  r'(href|src|action)="/(?!' + re.escape(BASE.lstrip('/')) + r'/)',
+                  r'(href|src|action)="/(?!' + BASE_ESC + r'/)',
                   r'\1="' + BASE + '/',
                   part
               )
-              # location.href='/foo/' → location.href='/base/foo/'
               part = re.sub(
-                  r"location\.href='/(?!" + re.escape(BASE.lstrip('/')) + r"/)",
+                  r"location\.href='/(?!" + BASE_ESC + r"/)",
                   "location.href='" + BASE + "/",
                   part
               )
+              return part
+
+          def rewrite_script_part(part):
+              """Rewrite script content (importmap, JS vars)"""
+              # エスケープ版 \/wp-includes\/ → \/base\/wp-includes\/
+              base_esc_slash = BASE.replace("/", "\\/")
+              part = part.replace("\\/wp-includes\\/", base_esc_slash + "\\/wp-includes\\/")
+              part = part.replace("\\/wp-content\\/", base_esc_slash + "\\/wp-content\\/")
+
+              # 非エスケープ版
+              part = re.sub(r'"/wp-includes/', '"' + BASE + '/wp-includes/', part)
+              part = re.sub(r'"/wp-content/', '"' + BASE + '/wp-content/', part)
+
               return part
 
           count = 0
@@ -66,12 +78,15 @@ jobs:
                       content = fh.read()
                   original = content
 
-                  # Split on script tags to preserve JSON-LD URLs
                   parts = re.split(r'(<script[^>]*>.*?</script>)', content, flags=re.DOTALL)
                   new_parts = []
                   for part in parts:
                       if re.match(r'<script', part):
-                          new_parts.append(part)
+                          # JSON-LDはそのまま、それ以外のscriptはパス変換
+                          if 'application/ld+json' in part:
+                              new_parts.append(part)
+                          else:
+                              new_parts.append(rewrite_script_part(part))
                       else:
                           new_parts.append(rewrite_html_part(part))
                   content = "".join(new_parts)
@@ -83,7 +98,7 @@ jobs:
 
           print(f"HTML: rewrote {count} files")
 
-          # CSS: url(/wp-content/...) → url(/base/wp-content/...)
+          # CSS
           css_count = 0
           for root, dirs, files in os.walk("."):
               dirs[:] = [d for d in dirs if not d.startswith(".")]
