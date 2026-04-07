@@ -27,23 +27,29 @@ jobs:
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
           BASE="/${REPO_NAME}"
 
-          # 相対パスの ../../../wp-content, ../wp-includes 等を絶対パスに変換
+          # HTML: 相対パスの ../../../wp-content, ../wp-includes 等を絶対パスに変換
           find . -name "*.html" -exec sed -i -E \
             -e "s|(href\|src\|content)=\"(\.\./)+wp-content/|\1=\"${BASE}/wp-content/|g" \
             -e "s|(href\|src\|content)=\"(\.\./)+wp-includes/|\1=\"${BASE}/wp-includes/|g" \
             -e "s|(href\|src\|content)=\"(\.\./)+wp-json/|\1=\"${BASE}/wp-json/|g" \
             {} +
 
-          # ルート相対パス（/で始まらない直接参照）にベースパスを付与
-          # href="wp-content/..." → href="/repo/wp-content/..."
+          # HTML: ルート相対パス（/なし）にベースパスを付与
           find . -name "*.html" -exec sed -i -E \
             -e "s|(href\|src)=\"wp-content/|\1=\"${BASE}/wp-content/|g" \
             -e "s|(href\|src)=\"wp-includes/|\1=\"${BASE}/wp-includes/|g" \
             {} +
 
-          # CSS内の相対パス修正
+          # CSS: 絶対パス url(/wp-content/...) にベースパスを付与
+          find . -name "*.css" -exec sed -i -E \
+            -e "s|url\(/wp-content/|url(${BASE}/wp-content/|g" \
+            -e "s|url\(/wp-includes/|url(${BASE}/wp-includes/|g" \
+            {} +
+
+          # CSS: 相対パス url(../wp-content/...) を絶対パスに変換
           find . -name "*.css" -exec sed -i -E \
             -e "s|url\((\.\./)+wp-content/|url(${BASE}/wp-content/|g" \
+            -e "s|url\((\.\./)+wp-includes/|url(${BASE}/wp-includes/|g" \
             {} +
 
       - uses: actions/configure-pages@v5
