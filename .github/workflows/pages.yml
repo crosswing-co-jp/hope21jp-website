@@ -119,6 +119,9 @@ jobs:
           print(f"CSS: rewrote {css_count} files")
           PYEOF
 
+      - name: Build Pagefind search index
+        run: npx pagefind@latest --site . --glob "**/*.html"
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
