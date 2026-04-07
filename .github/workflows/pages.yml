@@ -85,11 +85,17 @@ jobs:
                   new_parts = []
                   for part in parts:
                       if re.match(r'<script', part):
-                          # JSON-LDはそのまま、それ以外のscriptはパス変換
                           if 'application/ld+json' in part:
                               new_parts.append(part)
                           else:
-                              new_parts.append(rewrite_script_part(part))
+                              # Rewrite script tag attributes (src=) as HTML
+                              m = re.match(r'(<script[^>]*>)(.*?)(</script>)', part, re.DOTALL)
+                              if m:
+                                  tag_open = rewrite_html_part(m.group(1))
+                                  tag_body = rewrite_script_part(m.group(2))
+                                  new_parts.append(tag_open + tag_body + m.group(3))
+                              else:
+                                  new_parts.append(rewrite_script_part(part))
                       else:
                           new_parts.append(rewrite_html_part(part))
                   content = "".join(new_parts)
