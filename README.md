@@ -36,11 +36,13 @@ python3 -m http.server 3000
 
 ## 環境一覧
 
-| 環境 | URL | 用途 |
-|------|-----|------|
-| **本番** | https://hope21.jp | ドキュメントルートにファイルをコピー |
-| **検証** | https://crosswing-co-jp.github.io/hope21jp-website/ | mainにpushすると自動デプロイ |
-| **ローカル** | http://localhost:3000 | `python3 -m http.server 3000` |
+| 環境 | URL | 用途 | デプロイ契機 |
+|------|-----|------|------|
+| **本番 (Production)** | https://hope21.jp | エンドユーザー向け | 手動トリガー + 承認制 |
+| **検証 (Preview)** | https://crosswing-co-jp.github.io/hope21jp-website/ | レビュー・確認 | `main` への push で自動 |
+| **ローカル** | http://localhost:3000 | 開発中の動作確認 | `python3 -m http.server 3000` |
+
+詳細なリリース手順は [RELEASE.md](RELEASE.md) を参照。
 
 ### 関連リンク
 
@@ -50,13 +52,95 @@ python3 -m http.server 3000
 - **ページカタログ**: [SITE_PAGES.md](SITE_PAGES.md) — サイト構成の索引
 - **プロジェクト情報**: [CLAUDE.md](CLAUDE.md) — 開発時の注意点
 
-## デプロイフロー
+## インフラ構成
 
-1. `main` にpushすると [GitHub Actions](https://github.com/crosswing-co-jp/hope21jp-website/actions) が起動
-2. ワークフロー内で **Pagefindインデックス生成** → **パス変換** → **GitHub Pagesデプロイ**
-3. 2〜3分で検証環境URLに反映
+### 現行（移行中）
 
-ソースファイルは変換されないため、本番サーバーには `git pull` または rsync でそのままコピーするだけでOK。
+```
+hope21.jp
+  ↓
+CloudFront
+  ↓
+ELB
+  ├─ /sys/*   → EC2 (見積システム = sys2023 / React SPA)
+  └─ /*       → EC2 (WordPress)  ← 段階的に廃止予定
+```
+
+### 移行後（計画）
+
+```
+hope21.jp
+  ↓
+CloudFront ──────────────────────────────────────────┐
+  │                                                  │
+  ├─ Behavior: /sys/*                    → Origin A: ELB → EC2 (見積システム、変更なし)
+  │
+  ├─ Behavior: /wp-content/uploads/*     → Origin B: S3 (画像、1年キャッシュ)
+  ├─ Behavior: /wp-content/*, /wp-includes/*  → Origin B: S3 (CSS/JS、1週間キャッシュ)
+  │
+  └─ Behavior: Default (*)               → Origin B: S3 (HTML、5分キャッシュ)
+                                            ↑
+                                   CloudFront Functions:
+                                     ├ 301 redirect (旧URL 94件→新URL)
+                                     ├ trailing slash 正規化
+                                     └ index.html 解決
+                                            ↑
+                   GitHub Actions (deploy-production.yml) が S3 sync + CF invalidation
+```
+
+### 構成のポイント
+
+| 項目 | 内容 |
+|---|---|
+| 静的配信 | S3 (CloudFront OAC で保護、直接公開なし) |
+| 動的部分 (/sys/*) | ELB → EC2 上の見積システム（**既存のまま維持**） |
+| ドメイン・証明書 | hope21.jp (ACM + CloudFront、**既存のまま維持**) |
+| WAF / ログ | CloudFront の既存設定を継承 |
+| 旧URL対応 | CloudFront Functions で 94件を 301 redirect |
+| デプロイ | GitHub Actions → S3 sync（差分のみ） + CloudFront invalidation |
+| 認証 | OIDC ベース（AWS キーはリポジトリに保持しない） |
+
+### 移行のメリット
+
+| 項目 | Before (EC2+WP) | After (CF+S3) |
+|---|---|---|
+| 月次コスト (静的部分) | ~¥3,000 (EC2) | ~¥500 (S3+CF 転送) |
+| デプロイ | WP管理画面 or rsync | push → 承認 → 2〜3分で反映 |
+| 脆弱性対応 | WP+プラグイン継続パッチ | 不要（静的） |
+| バックアップ | DB + ファイル | GitHub 履歴 + S3 Versioning |
+| 負荷耐性 | EC2 スペック依存 | CloudFront 実質無制限 |
+
+### ネットワーク図（現行→移行後）
+
+```
+【現行】
+User ──► CloudFront ──► ELB ──┬──► EC2 (sys2023 / 動的)
+                               └──► EC2 (WordPress / 静的HTML生成)
+
+【移行後】
+User ──► CloudFront ──┬──► ELB ──► EC2 (sys2023 / 動的)
+                       └──► S3 (静的ファイル)
+                                   ↑
+                            GitHub Actions が同期
+
+【変更部分】
+  WP EC2 → S3 に置き換え。ELB と sys2023 は完全に維持。
+```
+
+## デプロイフロー（概要）
+
+**Preview（自動）**
+1. `main` に push → [GitHub Actions](https://github.com/crosswing-co-jp/hope21jp-website/actions) が起動
+2. Pagefind インデックス生成 → パス変換 → GitHub Pages へ公開
+3. 2〜3分で Preview URL に反映
+
+**Production（承認制）**
+1. Actions タブから "Deploy to Production" を手動トリガー
+2. 承認者が Approve
+3. S3 sync + CloudFront invalidation 実行
+4. 2〜3分で https://hope21.jp に反映
+
+詳細手順・ロールバック・緊急対応は [RELEASE.md](RELEASE.md)。
 
 ## 最近の主な変更
 
