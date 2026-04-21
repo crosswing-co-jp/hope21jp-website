@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ポケットセット（プロトタイプ） – 同人誌印刷の株式会社ホープツーワン</title>
+<style>
+:root{
+  --brand:#006DBE;
+  --brand-dark:#234C6A;
+  --bg:#FFFFFF;
+  --bg-soft:#F4F7FA;
+  --bg-accent:#DDEDF8;
+  --border:#E3E6EA;
+  --border-strong:#B2B2B2;
+  --text:#1b1b1b;
+  --text-muted:#666;
+  --attention:#BF0000;
+  --hot:#F5114F;
+  --radius:8px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans JP","Hiragino Sans","Meiryo",sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  margin:0;
+  line-height:1.7;
+  font-size:15px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* === ヘッダー === */
+.site-header{background:var(--brand);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.site-header .logo{font-weight:700;font-size:14px;letter-spacing:.02em}
+.site-header .logo a{color:#fff}
+.site-header .utility{display:flex;gap:8px;align-items:center;font-size:12px}
+.site-header .utility a{color:#fff;padding:6px 12px;border:1px solid rgba(255,255,255,.4);border-radius:4px}
+.site-header .utility a:hover{background:rgba(255,255,255,.12);text-decoration:none}
+
+/* === 戻るバー === */
+.proto-bar{background:#fff9e6;border-bottom:1px solid #f5b400;padding:8px 24px;font-size:12px;color:#6b4c00;display:flex;justify-content:space-between;align-items:center}
+.proto-bar a{color:#6b4c00;text-decoration:underline}
+
+.breadcrumb{max-width:1180px;margin:0 auto;padding:16px 24px 0;font-size:12px;color:var(--text-muted)}
+.breadcrumb a{color:var(--text-muted)}
+.breadcrumb .sep{margin:0 8px;color:#ccc}
+
+/* === レイアウト === */
+.wrap{max-width:1180px;margin:0 auto;padding:24px;display:grid;grid-template-columns:260px 1fr;gap:32px}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:20px;padding:16px}}
+
+/* === サイドバー === */
+.sidebar{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:16px}
+@media (max-width:900px){.sidebar{position:static}}
+.side-cta{background:var(--bg-accent);border-radius:var(--radius);padding:16px;text-align:center}
+.side-cta h3{margin:0 0 8px;font-size:13px;color:var(--brand)}
+.side-cta .cta-btn{display:block;margin-top:8px;background:var(--hot);color:#fff;padding:12px;border-radius:999px;font-weight:700;font-size:13px}
+.side-cta .cta-btn:hover{background:#d70e44;text-decoration:none}
+.side-cta .cta-btn.secondary{background:#ffb12a}
+.side-cta .cta-btn.secondary:hover{background:#e89b12}
+
+.side-nav{background:var(--bg-soft);border-radius:var(--radius);padding:12px 16px;font-size:13px}
+.side-nav h4{margin:0 0 8px;font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:.05em}
+.side-nav ul{list-style:none;margin:0;padding:0}
+.side-nav li{margin:4px 0}
+.side-nav a{display:block;padding:6px 8px;border-radius:4px;color:var(--text)}
+.side-nav a:hover{background:#fff;text-decoration:none}
+.side-nav a.current{background:var(--brand);color:#fff;font-weight:600}
+
+/* === メイン === */
+.label{display:inline-block;font-size:11px;color:var(--text-muted);background:var(--bg-soft);padding:4px 10px;border-radius:999px;letter-spacing:.05em}
+h1.page-title{font-size:32px;margin:8px 0 12px;line-height:1.3;letter-spacing:.01em}
+.lead{font-size:15px;color:var(--text-muted);margin:0 0 24px;max-width:60em}
+.lead strong{color:var(--text)}
+
+/* === 商品セレクタカード === */
+.chooser{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 32px}
+@media (max-width:700px){.chooser{grid-template-columns:1fr}}
+.chooser-card{
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 16px;
+  text-align:center;
+  transition:all .15s;
+  cursor:pointer;
+  text-decoration:none;
+  color:var(--text);
+  display:flex;flex-direction:column;align-items:center;
+}
+.chooser-card:hover{border-color:var(--brand);box-shadow:var(--shadow-md);text-decoration:none}
+.chooser-card .tag{display:inline-block;font-size:10px;background:var(--brand);color:#fff;padding:2px 8px;border-radius:999px;margin-bottom:8px;letter-spacing:.05em}
+.chooser-card.recommended{border-color:var(--brand);background:linear-gradient(180deg,#fff 0%,#f0f7fc 100%)}
+.chooser-card.recommended .tag{background:var(--hot)}
+.chooser-card.plus .tag{background:#f5b400;color:#222}
+.chooser-card.color .tag{background:#ab1dfe;color:#fff}
+.chooser-card h3{margin:4px 0 6px;font-size:16px}
+.chooser-card .sub{font-size:12px;color:var(--text-muted);margin:0 0 12px;line-height:1.4}
+.chooser-card .stats{display:flex;gap:16px;font-size:11px;color:var(--text-muted);margin-top:auto;padding-top:10px;border-top:1px dashed var(--border);width:100%;justify-content:center}
+.chooser-card .stats strong{display:block;color:var(--text);font-size:16px;font-weight:700}
+
+/* === 比較表 === */
+.compare-table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin:8px 0 32px;font-size:13px}
+.compare-table th,.compare-table td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.compare-table thead th{background:var(--bg-soft);font-size:12px;color:var(--text-muted);font-weight:600;white-space:nowrap}
+.compare-table thead th.product{color:var(--text);font-size:14px}
+.compare-table thead th.product small{display:block;font-size:11px;color:var(--text-muted);font-weight:400}
+.compare-table tbody th{font-weight:600;color:var(--text-muted);font-size:12px;background:#fafbfc;width:140px}
+.compare-table td{color:var(--text)}
+.compare-table tr:last-child td,.compare-table tr:last-child th{border-bottom:none}
+.compare-table .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:999px;background:var(--bg-soft);color:var(--text-muted);margin-left:4px}
+.compare-table .badge.hot{background:var(--hot);color:#fff}
+.compare-table .highlight{background:#fff8e1}
+.compare-table .cta-row td{background:var(--bg-accent);padding:16px 14px}
+.compare-table .mini-cta{display:inline-block;background:var(--hot);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.compare-table .mini-cta:hover{background:#d70e44;text-decoration:none}
+@media (max-width:700px){
+  .compare-table{font-size:12px}
+  .compare-table th,.compare-table td{padding:8px}
+  .compare-table tbody th{width:80px}
+}
+
+/* === セクションヘッダー === */
+.section-head{
+  margin:40px 0 12px;
+  padding:4px 0 4px 14px;
+  border-left:4px solid var(--brand);
+  display:flex;align-items:baseline;gap:12px;
+}
+.section-head h2{margin:0;font-size:20px;line-height:1.4}
+.section-head .note{font-size:12px;color:var(--text-muted)}
+
+/* === 詳細セクション === */
+.product-detail{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:16px 0 24px;scroll-margin-top:16px}
+.product-detail h3{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:10px}
+.product-detail h3 .pill{font-size:11px;padding:3px 10px;border-radius:999px;background:var(--bg-accent);color:var(--brand);font-weight:600}
+.product-detail .pill.color{background:#f3e8ff;color:#6a1bab}
+.product-detail .pill.plus{background:#fef3c7;color:#92400e}
+.product-detail .desc{color:var(--text-muted);margin:4px 0 20px;font-size:14px}
+.spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--border)}
+@media (max-width:700px){.spec-grid{grid-template-columns:1fr}}
+.spec-grid .row{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--border);padding:10px 0;gap:12px;font-size:13px}
+.spec-grid .row dt{color:var(--text-muted);font-size:12px;font-weight:600;margin:0}
+.spec-grid .row dd{margin:0;color:var(--text)}
+.spec-grid .full{grid-column:1 / -1}
+details.paper-list{margin:12px 0;background:var(--bg-soft);border-radius:6px;padding:10px 14px}
+details.paper-list summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--brand);list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.paper-list summary::after{content:"▼";font-size:10px;transition:transform .2s}
+details.paper-list[open] summary::after{transform:rotate(180deg)}
+details.paper-list ul{margin:8px 0 0;padding:0 0 0 20px;font-size:12px;line-height:1.9;color:var(--text)}
+details.paper-list ul li{list-style:disc}
+.deadline-big{font-size:14px}
+.deadline-big strong{font-size:24px;color:var(--brand);font-weight:900;margin:0 4px}
+
+/* === ポイントブロック（キャンペーン）=== */
+.campaign-list{margin:8px 0;padding:0;list-style:none}
+.campaign-list li{padding:6px 10px;background:#fff;border:1px solid var(--border);border-radius:4px;margin:4px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.campaign-list .days{font-size:11px;color:var(--hot);font-weight:600;white-space:nowrap}
+
+/* === CTA === */
+.product-cta{display:flex;gap:12px;align-items:center;margin-top:20px;padding:16px;background:var(--bg-accent);border-radius:var(--radius)}
+.product-cta .cta-label{flex:1;font-size:13px;color:var(--text-muted)}
+.product-cta .cta-label strong{display:block;color:var(--text);font-size:15px;margin-bottom:2px}
+.product-cta .cta-btn{background:var(--hot);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:13px;white-space:nowrap}
+.product-cta .cta-btn:hover{background:#d70e44;text-decoration:none}
+
+/* === スティッキーCTA (モバイル) === */
+.sticky-cta{display:none}
+@media (max-width:900px){
+  .sticky-cta{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:10px 16px;gap:8px;z-index:100;box-shadow:0 -4px 12px rgba(0,0,0,.08)}
+  .sticky-cta a{flex:1;text-align:center;padding:12px;border-radius:999px;font-size:13px;font-weight:700;background:var(--hot);color:#fff}
+  body{padding-bottom:72px}
+}
+
+/* === 注意事項 === */
+.caution{background:var(--bg-soft);border-radius:var(--radius);padding:20px 24px;margin-top:32px;font-size:13px;color:var(--text-muted);line-height:1.8}
+.caution h3{margin:0 0 8px;color:var(--text);font-size:15px}
+.caution h4{margin:12px 0 4px;color:var(--text);font-size:13px}
+.caution ul{margin:4px 0;padding-left:20px}
+.caution .hot{color:var(--hot);font-weight:600}
+
+/* === 汎用 === */
+.hot{color:var(--hot);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- 簡易ヘッダー -->
+<div class="site-header">
+  <div class="logo"><a href="../../../../index.html">同人誌印刷の株式会社ホープツーワン</a></div>
+  <div class="utility">
+    <a href="../../../../sys/">マイページ</a>
+    <a href="../../../../faq/">FAQ</a>
+  </div>
+</div>
+
+<!-- プロトタイプ表示バー -->
+<div class="proto-bar">
+  <span><strong>🧪 UIプロトタイプ</strong> — 現行ページの改善案。オリジナル → <a href="../">/lineup/set/pocket/</a></span>
+  <span>記録日: 2026-04-21</span>
+</div>
+
+<nav class="breadcrumb">
+  <a href="../../../../index.html">HOME</a><span class="sep">›</span>
+  <a href="../../index.html">セット</a><span class="sep">›</span>
+  <strong>ポケットセット</strong>
+</nav>
+
+<div class="wrap">
+
+  <!-- サイドバー（整理・CTA優先） -->
+  <aside class="sidebar">
+    <div class="side-cta">
+      <h3>見積もりNavi</h3>
+      <p style="font-size:11px;color:var(--text-muted);margin:0 0 8px">締切・料金を今すぐ確認</p>
+      <a class="cta-btn" href="../../../../sys/order/102/" target="_blank">同人誌 料金シミュ</a>
+      <a class="cta-btn secondary" href="../../../../goods/" style="margin-top:6px">グッズ 料金シミュ</a>
+    </div>
+    <div class="side-nav">
+      <h4>このページ内</h4>
+      <ul>
+        <li><a href="#compare" class="current">3商品の比較表</a></li>
+        <li><a href="#pocket">ポケットセット 詳細</a></li>
+        <li><a href="#pocket-plus">ポケットセット＋ 詳細</a></li>
+        <li><a href="#pocket-color">カラーポケット 詳細</a></li>
+        <li><a href="#caution">オンデマンド注意事項</a></li>
+      </ul>
+    </div>
+    <div class="side-nav">
+      <h4>他のセットを見る</h4>
+      <ul>
+        <li><a href="../../switch/">スイッチセット（表紙OD・本文OFF）</a></li>
+        <li><a href="../../atom-2/">ATOMセット（オフセット）</a></li>
+        <li><a href="../../flight/">フライトセット（小説向け）</a></li>
+        <li><a href="../../metalliccolor/">メタリックカラーセット</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- メイン -->
+  <main>
+    <span class="label">セット</span>
+    <h1 class="page-title">ポケットセット</h1>
+    <p class="lead">
+      <strong>少部数・短納期・お手軽</strong>のオンデマンド印刷セット。迷ったらコレ！ 一番人気の定番セットです。<br>
+      用途に合わせて <strong>ポケット / ポケット＋ / カラーポケット</strong> の3種類からお選びいただけます。
+    </p>
+
+    <!-- 商品セレクタ -->
+    <div class="chooser">
+      <a href="#pocket" class="chooser-card recommended">
+        <span class="tag">いちばん人気</span>
+        <h3>ポケットセット</h3>
+        <p class="sub">モノクロ本文＋<br>最短3日納期</p>
+        <div class="stats">
+          <div><strong>3日</strong>締切</div>
+          <div><strong>モノクロ</strong>本文</div>
+        </div>
+      </a>
+      <a href="#pocket-plus" class="chooser-card plus">
+        <span class="tag">用紙・加工が豊富</span>
+        <h3>ポケットセット＋</h3>
+        <p class="sub">用紙27種・PP/箔押し可<br>のせのせ対応</p>
+        <div class="stats">
+          <div><strong>9日</strong>締切</div>
+          <div><strong>カラー可</strong>本文</div>
+        </div>
+      </a>
+      <a href="#pocket-color" class="chooser-card color">
+        <span class="tag">フルカラー</span>
+        <h3>カラーポケット</h3>
+        <p class="sub">表紙＋本文フルカラー<br>短納期そのまま</p>
+        <div class="stats">
+          <div><strong>3日</strong>締切</div>
+          <div><strong>フルカラー</strong>本文</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- 比較表 -->
+    <div class="section-head" id="compare">
+      <h2>3商品の違いを比較</h2>
+      <span class="note">※共通: 部数 10–300部 / ページ 20–300P / サイズ B5・A5・B6・新書・文庫 / 無線綴じ / データ入稿</span>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:120px"></th>
+          <th class="product">ポケット<small>定番 / 短納期</small></th>
+          <th class="product">ポケット＋<small>用紙豊富 / 加工可</small></th>
+          <th class="product">カラーポケット<small>フルカラー</small></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>本文印刷</th>
+          <td>モノクロ</td>
+          <td class="highlight">カラー / モノクロ</td>
+          <td class="highlight">フルカラー</td>
+        </tr>
+        <tr>
+          <th>表紙印刷</th>
+          <td>OD カラー / モノクロ</td>
+          <td>OD カラー / モノクロ</td>
+          <td>OD フルカラー</td>
+        </tr>
+        <tr>
+          <th>締切</th>
+          <td><strong style="color:var(--brand)">約3日前</strong> <span class="badge hot">最短</span></td>
+          <td>約9日前</td>
+          <td><strong style="color:var(--brand)">約3日前</strong> <span class="badge hot">最短</span></td>
+        </tr>
+        <tr>
+          <th>表紙用紙</th>
+          <td>6種</td>
+          <td class="highlight">27種 + 季節用紙 + ホログラム</td>
+          <td>6種</td>
+        </tr>
+        <tr>
+          <th>本文用紙</th>
+          <td>7種</td>
+          <td>8種（+マットコート90kg）</td>
+          <td>2種（上質 / マットコート）</td>
+        </tr>
+        <tr>
+          <th>遊び紙</th>
+          <td>半更クラフト紙</td>
+          <td class="highlight">4系統（クラフト・色上質・TS-1・トレペ）</td>
+          <td>2系統（+1日）</td>
+        </tr>
+        <tr>
+          <th>有料オプション</th>
+          <td>表紙紙替え・角丸</td>
+          <td class="highlight">PP / 箔押し / 角丸 / アート遊び紙</td>
+          <td>表紙紙替え・角丸</td>
+        </tr>
+        <tr>
+          <th>キャンペーン</th>
+          <td>早割15% / 25%<br>超短納期・のせのせ</td>
+          <td class="highlight">早割5%〜20%（4段階）<br>超短納期・のせのせ</td>
+          <td>早割15% / 25%<br>のせのせ</td>
+        </tr>
+        <tr class="cta-row">
+          <th></th>
+          <td><a class="mini-cta" href="../../../../sys/order/102/" target="_blank">料金を見る →</a></td>
+          <td><a class="mini-cta" href="../../../../sys/order/104/" target="_blank">料金を見る →</a></td>
+          <td><a class="mini-cta" href="../../../../sys/order/103/" target="_blank">料金を見る →</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 詳細: ポケット -->
+    <div class="section-head">
+      <h2>商品詳細</h2>
+      <span class="note">各商品の細かい仕様はこちら</span>
+    </div>
+
+    <section class="product-detail" id="pocket">
+      <h3>ポケットセット <span class="pill">いちばん人気</span></h3>
+      <p class="desc">短納期の入稿が可能な一番人気セット。大型イベント時は超短納期も対応。</p>
+      <dl class="spec-grid">
+        <div class="row"><dt>印刷</dt><dd>表紙：OD カラー/モノクロ ／ 本文：モノクロ</dd></div>
+        <div class="row"><dt>締切</dt><dd class="deadline-big">納品日の約<strong>3</strong>日前 <a href="../../../../deadline/">→ 詳細締切</a></dd></div>
+        <div class="row"><dt>部数</dt><dd>10〜300部</dd></div>
+        <div class="row"><dt>ページ数</dt><dd>20P〜300P ※16P未満は要相談</dd></div>
+        <div class="row"><dt>サイズ</dt><dd>B5 / A5 / B6 / 新書 / 文庫</dd></div>
+        <div class="row"><dt>綴じ</dt><dd>無線綴じ</dd></div>
+        <div class="row full">
+          <details class="paper-list">
+            <summary>表紙用紙（基本6種）を見る</summary>
+            <ul>
+              <li>アートポスト 180kg</li>
+              <li>エンボス サンバ 160kg（クリスタル / シルク）</li>
+              <li>カラークリスタル 135kg（クリーム / ブルー / ピンク）</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>本文用紙（7種）を見る</summary>
+            <ul>
+              <li>上質 90kg / ナチュラル / マットコート 90kg</li>
+              <li>コミックルンバ（白 / クリーム / ブルー / ピンク）</li>
+              <li>書籍紙 72.5kg ※超短納期では利用不可</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>有料オプション（紙替え12種 + 角丸）を見る</summary>
+            <ul>
+              <li>デュークブラウン / シャインフェイス / 新星物語 / ファンタス</li>
+              <li>マーメイド（4色）/ きらびきHG / ミランダ（2色）/ シェルルックN</li>
+              <li>加工: 角丸</li>
+            </ul>
+          </details>
+        </div>
+        <div class="row full">
+          <dt>キャンペーン</dt>
+          <dd>
+            <ul class="campaign-list">
+              <li>早割 15%OFF or 早得 20POINT<span class="days">＋1日</span></li>
+              <li>早割 25%OFF or 早得 30POINT<span class="days">＋2日</span></li>
+              <li>超短納期お助け企画（事前予約・連絡不要）</li>
+              <li>のせのせキャンペーン ／ イベント支援</li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
+      <div class="product-cta">
+        <div class="cta-label"><strong>ポケットセットの料金を確認</strong>見積もりNaviで試算できます</div>
+        <a class="cta-btn" href="../../../../sys/order/102/" target="_blank">料金を見る →</a>
+      </div>
+    </section>
+
+    <!-- 詳細: ポケット+ -->
+    <section class="product-detail" id="pocket-plus">
+      <h3>ポケットセット＋ <span class="pill plus">用紙・加工が豊富</span></h3>
+      <p class="desc">ポケットよりも用紙や加工の幅が増え、のせのせを利用して無料で加工やグッズが貰えるセット。</p>
+      <dl class="spec-grid">
+        <div class="row"><dt>印刷</dt><dd>表紙：OD カラー/モノクロ ／ 本文：<strong>カラー / モノクロ</strong></dd></div>
+        <div class="row"><dt>締切</dt><dd class="deadline-big">納品日の約<strong>9</strong>日前 <a href="../../../../deadline/">→ 詳細締切</a></dd></div>
+        <div class="row"><dt>部数</dt><dd>10〜300部</dd></div>
+        <div class="row"><dt>ページ数</dt><dd>20P〜300P ※16P未満は要相談</dd></div>
+        <div class="row"><dt>サイズ</dt><dd>B5 / A5 / B6 / 新書 / 文庫</dd></div>
+        <div class="row"><dt>綴じ</dt><dd>無線綴じ</dd></div>
+        <div class="row full">
+          <details class="paper-list">
+            <summary>表紙用紙（27種 + 季節用紙 + ホログラム）を見る</summary>
+            <ul>
+              <li>アートポスト（PP有・無）/ エンボスサンバ / カラークリスタル</li>
+              <li>デュークブラウン / シャインフェイス / 新星物語 / ファンタス</li>
+              <li>マーメイド / きらびきHG / ミランダ / シェルルックN</li>
+              <li>OKムーンカラー（4色）/ 里紙 / ボス / 新バフン</li>
+              <li>ホログラムペーパーT4 / T7</li>
+              <li>＋ 季節限定の特殊紙</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>本文用紙（8種）を見る</summary>
+            <ul>
+              <li>上質 90kg / ナチュラル / マットコート 90kg</li>
+              <li>コミックルンバ（白 / クリーム / ブルー / ピンク）</li>
+              <li>書籍紙 72.5kg ※超短納期では利用不可</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>遊び紙・有料オプション を見る</summary>
+            <ul>
+              <li>遊び紙: 半更クラフト / 色上質 / TS-1 / トレーシングペーパー</li>
+              <li>加工: PP（マット/クリア）・箔押し・角丸・アート遊び紙</li>
+            </ul>
+          </details>
+        </div>
+        <div class="row full">
+          <dt>キャンペーン</dt>
+          <dd>
+            <ul class="campaign-list">
+              <li>早割 5%OFF or 早得 10POINT<span class="days">＋1日</span></li>
+              <li>早割 10%OFF or 早得 15POINT<span class="days">＋2日</span></li>
+              <li>早割 15%OFF or 早得 20POINT<span class="days">＋3日</span></li>
+              <li>早割 20%OFF or 早得 30POINT<span class="days">＋4日</span></li>
+              <li>超短納期お助け企画 ／ のせのせキャンペーン ／ イベント支援</li>
+            </ul>
+            <p style="font-size:11px;color:var(--text-muted);margin:4px 0 0">※大型イベント時は+5日で早割30%OFFの場合あり</p>
+          </dd>
+        </div>
+      </dl>
+      <div class="product-cta">
+        <div class="cta-label"><strong>ポケットセット＋の料金を確認</strong>見積もりNaviで試算できます</div>
+        <a class="cta-btn" href="../../../../sys/order/104/" target="_blank">料金を見る →</a>
+      </div>
+    </section>
+
+    <!-- 詳細: カラー -->
+    <section class="product-detail" id="pocket-color">
+      <h3>カラーポケットセット <span class="pill color">フルカラー</span></h3>
+      <p class="desc">納期そのままで紙替え可能。短納期でお手軽にフルカラー本が作れるセット。</p>
+      <dl class="spec-grid">
+        <div class="row"><dt>印刷</dt><dd>表紙：OD <strong>フルカラー</strong> ／ 本文：OD <strong>フルカラー</strong></dd></div>
+        <div class="row"><dt>締切</dt><dd class="deadline-big">納品日の約<strong>3</strong>日前 <a href="../../../../deadline/">→ 詳細締切</a></dd></div>
+        <div class="row"><dt>部数</dt><dd>10〜300部</dd></div>
+        <div class="row"><dt>ページ数</dt><dd>20P〜300P ※16P未満は要相談</dd></div>
+        <div class="row"><dt>サイズ</dt><dd>B5 / A5 / B6 / 新書 / 文庫</dd></div>
+        <div class="row"><dt>綴じ</dt><dd>無線綴じ</dd></div>
+        <div class="row full">
+          <details class="paper-list">
+            <summary>表紙用紙（基本6種）を見る</summary>
+            <ul>
+              <li>アートポスト 180kg</li>
+              <li>エンボス サンバ 160kg（クリスタル / シルク）</li>
+              <li>カラークリスタル 135kg（クリーム / ブルー / ピンク）</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>本文用紙（2種）を見る</summary>
+            <ul>
+              <li>上質 90kg</li>
+              <li>マットコート 90kg</li>
+            </ul>
+          </details>
+          <details class="paper-list">
+            <summary>有料オプション（紙替え12種 + 角丸）を見る</summary>
+            <ul>
+              <li>デュークブラウン / シャインフェイス / 新星物語 / ファンタス</li>
+              <li>マーメイド（4色）/ きらびきHG / ミランダ（2色）/ シェルルックN</li>
+              <li>加工: 角丸</li>
+            </ul>
+          </details>
+        </div>
+        <div class="row full">
+          <dt>キャンペーン</dt>
+          <dd>
+            <ul class="campaign-list">
+              <li>早割 15%OFF or 早得 20POINT<span class="days">＋1日</span></li>
+              <li>早割 25%OFF or 早得 30POINT<span class="days">＋2日</span></li>
+              <li>のせのせキャンペーン ／ イベント支援</li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
+      <div class="product-cta">
+        <div class="cta-label"><strong>カラーポケットセットの料金を確認</strong>見積もりNaviで試算できます</div>
+        <a class="cta-btn" href="../../../../sys/order/103/" target="_blank">料金を見る →</a>
+      </div>
+    </section>
+
+    <!-- 注意事項 -->
+    <section class="caution" id="caution">
+      <h3>オンデマンド印刷について</h3>
+      <p>オンデマンド印刷はオフセット印刷のような版を使った印刷とは異なり、トナーでの印刷となります。以下のような特有の現象が生じる場合がございます。</p>
+      <ul>
+        <li>厳密な色合わせが難しく、再版時の色味の誤差が生じる場合があります</li>
+        <li>RGB入稿の場合、弊社にてCMYK変換して印刷します</li>
+        <li>広いベタ塗りや平網の部分にムラが出ることがあります</li>
+        <li>トナー定着時の熱で紙が波打つことがあります</li>
+        <li>折り部分のトナーがはがれやすい / 稀に白抜け・トナーカスが生じます</li>
+        <li>PP加工時、断裁位置の濃いベタ面ではPPフィルムの剥がれが生じやすいです</li>
+      </ul>
+
+      <h4>入稿上のご注意</h4>
+      <ul>
+        <li>アナログ原稿不可。<span class="hot">データ入稿のみ</span></li>
+        <li>表紙・本文・グッズ・オプション等は<span class="hot">すべて同時入稿</span>してください</li>
+        <li>文字入れやノンブル付与等の編集は不可。<span class="hot">完全原稿</span>でご入稿ください</li>
+        <li>入稿時は出力見本（画像 or PDF）を必ず添付してください</li>
+        <li>データの差し替えは原則不可。事前確認の上ご入稿ください</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<!-- モバイルスティッキーCTA -->
+<div class="sticky-cta">
+  <a href="../../../../sys/order/102/" target="_blank">料金を見る（見積もりNavi）</a>
+</div>
+
+<script>
+// サイドナビ現在位置ハイライト
+(function(){
+  var links = document.querySelectorAll('.side-nav a[href^="#"]');
+  var sections = Array.from(links).map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  function onScroll(){
+    var y = window.scrollY + 100;
+    var current = sections[0];
+    for(var i=0;i<sections.length;i++){ if(sections[i].offsetTop <= y) current = sections[i]; }
+    links.forEach(function(a){
+      a.classList.toggle('current', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
