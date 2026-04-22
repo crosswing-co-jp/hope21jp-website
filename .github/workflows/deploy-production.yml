@@ -1,0 +1,120 @@
+name: Deploy to Production (S3 + CloudFront)
+
+on:
+  workflow_dispatch:
+    inputs:
+      invalidate_all:
+        description: "CloudFront全体を invalidate する (/*)"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  id-token: write   # OIDC用
+  contents: read
+
+concurrency:
+  group: production
+  cancel-in-progress: false   # 本番は並行実行しない。キューで待つ
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://hope21.jp/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Pagefind search index
+        run: npx pagefind@latest --site . --glob "**/*.html"
+
+      - name: Override robots.txt for production
+        run: |
+          cat > robots.txt <<EOF
+          User-agent: *
+          Allow: /
+          Sitemap: https://hope21.jp/sitemap.xml
+          EOF
+          echo "--- robots.txt ---"
+          cat robots.txt
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Sync HTML/text files to S3 (short cache)
+        run: |
+          aws s3 sync . s3://${{ vars.S3_BUCKET }}/ \
+            --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".claude/*" \
+            --exclude "*.md" \
+            --exclude "SETUP_LOG.md" \
+            --exclude "wp-content/uploads/*" \
+            --exclude "wp-content/themes/*/img/*" \
+            --exclude "wp-content/themes/*/assets/*" \
+            --exclude "wp-includes/*" \
+            --cache-control "public,max-age=300,must-revalidate" \
+            --metadata-directive REPLACE \
+            --no-progress
+
+      - name: Sync long-cache assets (images, themes, wp-includes)
+        run: |
+          # 画像
+          if [ -d wp-content/uploads ]; then
+            aws s3 sync wp-content/uploads s3://${{ vars.S3_BUCKET }}/wp-content/uploads \
+              --cache-control "public,max-age=31536000,immutable" \
+              --metadata-directive REPLACE \
+              --no-progress
+          fi
+          # テーマアセット
+          if [ -d wp-content/themes ]; then
+            aws s3 sync wp-content/themes s3://${{ vars.S3_BUCKET }}/wp-content/themes \
+              --cache-control "public,max-age=604800" \
+              --metadata-directive REPLACE \
+              --no-progress
+          fi
+          # wp-includes
+          if [ -d wp-includes ]; then
+            aws s3 sync wp-includes s3://${{ vars.S3_BUCKET }}/wp-includes \
+              --cache-control "public,max-age=604800" \
+              --metadata-directive REPLACE \
+              --no-progress
+          fi
+          # pagefind (検索インデックス、HTML変更に連動するので短期)
+          if [ -d pagefind ]; then
+            aws s3 sync pagefind s3://${{ vars.S3_BUCKET }}/pagefind \
+              --cache-control "public,max-age=300" \
+              --metadata-directive REPLACE \
+              --no-progress
+          fi
+
+      - name: Report S3 state
+        run: |
+          echo "--- S3 object count ---"
+          aws s3 ls s3://${{ vars.S3_BUCKET }} --recursive --summarize | tail -2
+
+      - name: Invalidate CloudFront
+        if: ${{ inputs.invalidate_all == true || inputs.invalidate_all == null }}
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id ${{ vars.CF_DISTRIBUTION_ID }} \
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
+          echo "Invalidation: $INVALIDATION_ID"
+
+      - name: Summary
+        run: |
+          echo "## デプロイ完了 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "- S3: s3://${{ vars.S3_BUCKET }}/" >> $GITHUB_STEP_SUMMARY
+          echo "- CloudFront: ${{ vars.CF_DISTRIBUTION_ID }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 本番URL: https://hope21.jp/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "※ 本番切替（CloudFront Default Behavior を S3 に変更）は別途手動で実施してください。" >> $GITHUB_STEP_SUMMARY
