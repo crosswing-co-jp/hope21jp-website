@@ -1,4 +1,7 @@
 pagefind/
 .DS_Store
 
-.claude/
+# Claude Code: 個人設定は除外、プロジェクト共有コマンドは含める
+.claude/*
+!.claude/commands/
+.claude/settings.local.json
