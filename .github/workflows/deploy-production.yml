@@ -1,6 +1,10 @@
 name: Deploy to Production (S3 + CloudFront)
 
 on:
+  # main ブランチへの push (PR merge 含む) で自動デプロイ
+  push:
+    branches: [main]
+  # 緊急時やメンテ時の手動実行用
   workflow_dispatch:
     inputs:
       invalidate_all:
@@ -101,7 +105,8 @@ jobs:
           aws s3 ls s3://${{ vars.S3_BUCKET }} --recursive --summarize | tail -2
 
       - name: Invalidate CloudFront
-        if: ${{ inputs.invalidate_all == true || inputs.invalidate_all == null }}
+        # push トリガーは inputs が存在しないので常に実行、dispatch 時はフラグで制御
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.invalidate_all == true }}
         run: |
           INVALIDATION_ID=$(aws cloudfront create-invalidation \
             --distribution-id ${{ vars.CF_DISTRIBUTION_ID }} \

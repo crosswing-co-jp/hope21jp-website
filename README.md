@@ -129,16 +129,19 @@ User ──► CloudFront ──┬──► ELB ──► EC2 (sys2023 / 動的
 
 ## デプロイフロー（概要）
 
-**Preview（自動）**
-1. `main` に push → [GitHub Actions](https://github.com/crosswing-co-jp/hope21jp-website/actions) が起動
-2. Pagefind インデックス生成 → パス変換 → GitHub Pages へ公開
+**Preview（dev ブランチへの push で自動）**
+1. `dev` ブランチに push
+2. GitHub Actions が起動 → Pagefind → パス変換 → GitHub Pages 反映
 3. 2〜3分で Preview URL に反映
 
-**Production（承認制）**
-1. Actions タブから "Deploy to Production" を手動トリガー
-2. 承認者が Approve
-3. S3 sync + CloudFront invalidation 実行
+**Production（PR dev→main マージで自動）**
+1. Preview で確認後、`dev → main` の Pull Request 作成
+2. レビューを受けてマージ
+3. GitHub Actions が自動起動 → S3 sync + CloudFront invalidation
 4. 2〜3分で https://hope21.jp に反映
+
+**PR レビューが本番承認を兼ねる**のでシンプルなGitOps運用。
+緊急時は main 直pushまたは手動workflow実行可能。
 
 詳細手順・ロールバック・緊急対応は [RELEASE.md](RELEASE.md)。
 
