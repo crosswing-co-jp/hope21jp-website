@@ -48,7 +48,8 @@ python3 -m http.server 3000
 
 - **リポジトリ**: https://github.com/crosswing-co-jp/hope21jp-website
 - **GitHub Actions（デプロイ状況）**: https://github.com/crosswing-co-jp/hope21jp-website/actions
-- **リリースフロー**: [RELEASE.md](RELEASE.md) — preview/production デプロイ手順・ロールバック・緊急対応
+- **📖 編集ガイド (非エンジニア向け)**: [EDITOR_GUIDE.md](EDITOR_GUIDE.md) — GitHub ウェブで完結する編集手順
+- **リリースフロー (エンジニア向け)**: [RELEASE.md](RELEASE.md) — preview/production デプロイ手順・ロールバック・緊急対応
 - **ページカタログ**: [SITE_PAGES.md](SITE_PAGES.md) — サイト構成の索引
 - **プロジェクト情報**: [CLAUDE.md](CLAUDE.md) — 開発時の注意点
 

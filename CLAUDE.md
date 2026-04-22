@@ -12,13 +12,14 @@ HOPE21（同人誌印刷会社）のコーポレートサイト。
 
 ## 関連ドキュメント（先に読んで）
 
-| ドキュメント | 内容 |
-|---|---|
-| [README.md](README.md) | 開発環境セットアップ・インフラ構成の全体像 |
-| [RELEASE.md](RELEASE.md) | リリースフロー・ロールバック・緊急対応 |
-| [SITE_PAGES.md](SITE_PAGES.md) | サイトページカタログ（どこに何があるか） |
-| [SETUP_PRODUCTION.md](SETUP_PRODUCTION.md) | 本番環境の初回セットアップ手順（完了済みのランブック） |
-| [SETUP_LOG.md](SETUP_LOG.md) | 初期構築の履歴 |
+| ドキュメント | 内容 | 想定読者 |
+|---|---|---|
+| [README.md](README.md) | 開発環境セットアップ・インフラ構成の全体像 | 全員 |
+| [EDITOR_GUIDE.md](EDITOR_GUIDE.md) | **非エンジニア向け** GitHub ウェブでの編集手順 | 編集担当 |
+| [RELEASE.md](RELEASE.md) | リリースフロー・ロールバック・緊急対応 | エンジニア |
+| [SITE_PAGES.md](SITE_PAGES.md) | サイトページカタログ（どこに何があるか） | 全員 |
+| [SETUP_PRODUCTION.md](SETUP_PRODUCTION.md) | 本番環境の初回セットアップ手順（完了済みのランブック） | インフラ担当 |
+| [SETUP_LOG.md](SETUP_LOG.md) | 初期構築の履歴 | 参考 |
 
 ---
 
