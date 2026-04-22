@@ -1,236 +1,257 @@
-# 編集ガイド（エンジニア以外の方向け）
+# 編集ガイド（Claude Code で作業する方向け）
 
-このサイトの文章や画像を**安全に**編集・公開するための、手取り足取り解説書です。
+このサイトを Claude Code を使って編集・公開するガイドです。
+難しいコマンドを暗記する必要はありません。**Claude Code に日本語で話しかければ代わりにやってくれます**。
 
-> 👀 **読む前に**: このガイドは「GitHub のウェブページだけで完結する」作業方法を説明します。黒い画面（ターミナル）や難しいコマンドは使いません。
+> 🤖 **前提**: Claude Code がインストール済み、GitHub 連携済み
 
 ---
 
 ## 目次
 
-1. [基本用語（3つだけ覚える）](#基本用語3つだけ覚える)
-2. [全体の流れ](#全体の流れ)
-3. [ステップ・バイ・ステップ](#ステップバイステップ)
-4. [よくある作業パターン](#よくある作業パターン)
-5. [困ったとき](#困ったとき)
+1. [基本用語（3つだけ）](#基本用語3つだけ)
+2. [初回セットアップ（1回だけ）](#初回セットアップ1回だけ)
+3. [日常の編集フロー](#日常の編集フロー)
+4. [ローカルで見た目を確認](#ローカルで見た目を確認)
+5. [Preview と 本番](#preview-と-本番)
+6. [よくある作業パターン](#よくある作業パターン)
+7. [困ったとき](#困ったとき)
 
 ---
 
-## 基本用語（3つだけ覚える）
+## 基本用語（3つだけ）
 
-### 1. 本番 (main ブランチ)
-**本物のサイト**。ここに入った変更は即 https://hope21.jp に反映されます。
-直接いじってはいけません。
+### 1. `main` ブランチ = 本番
+ここに入ったものは即 **https://hope21.jp** に出ます。直接触りません。
 
-### 2. 開発 (dev ブランチ)
-**練習場**。ここに変更を置いても本番には出ません。
-「**お試し版**」のようなもの。普段の編集は全部 dev 側でやります。
+### 2. `dev` ブランチ = 練習場 / Preview
+ここで作業します。push すると Preview 用URL に自動反映（本番にはまだ出ない）。
 
-### 3. Pull Request (プルリクエスト / 略してPR)
-**「dev の内容を本番に反映させてくれ」というお願い**。
-誰かのレビュー（確認）を経てから反映されます。
+### 3. Pull Request (PR) = 本番反映のお願い
+`dev` → `main` のマージ申請。レビューを受けてからマージ。マージした瞬間に本番デプロイ。
 
 ---
 
-## 全体の流れ
+## 初回セットアップ（1回だけ）
+
+Claude Code に以下のプロンプトをそのまま送ってください。コマンドは Claude が代わりに実行します。
 
 ```
-【1】GitHub で dev ブランチにファイル編集
-         ↓
-【2】「Commit changes」ボタンを押して保存
-         ↓
-【3】2〜3分待つ  →  Preview URL で自動反映されたか確認
-         ↓
-【4】見た目がOKなら Pull Request を作成（ボタン1つ）
-         ↓
-【5】レビュアーに依頼  →  レビュアーが「Merge」ボタンを押す
-         ↓
-【6】2〜3分待つ  →  本番 https://hope21.jp に反映完了 🎉
+このリポジトリで初めて作業します。以下を手伝ってください:
+1. dev ブランチに切り替える（存在しなければ作成）
+2. 最新の main と dev を同期
+3. ローカルプレビュー用のサーバーを起動
+4. 起動したら URL を教えてください
 ```
+
+Claude が:
+- `git fetch` / `git checkout dev` / `git pull`
+- `python3 -m http.server 3000` をバックグラウンドで起動
+- http://localhost:3000 を案内
+
+してくれます。
 
 ---
 
-## ステップ・バイ・ステップ
+## 日常の編集フロー
 
-### Step 1: GitHub にログイン
+### ステップの全体像
 
-https://github.com/crosswing-co-jp/hope21jp-website を開き、自分のアカウントでログインします。
+```
+① dev ブランチにいることを確認
+        ↓
+② Claude に「XXを△△に変えて」と依頼
+        ↓
+③ ローカルで表示を目視確認（http://localhost:3000）
+        ↓
+④ Claude に「コミットしてdevにpushして」と依頼
+        ↓
+⑤ 2〜3分後 → Preview URL で確認
+        ↓
+⑥ Claude に「PR作って」と依頼
+        ↓
+⑦ GitHub 上でレビュアーに確認依頼
+        ↓
+⑧ レビュー後、Merge → 本番自動デプロイ 🎉
+```
 
-### Step 2: `dev` ブランチに切り替える
+### 具体例
 
-ページ左上あたりに `main` と書かれた**ブランチ切替えドロップダウン**があります。
+#### 編集を依頼
 
-1. `main` と書かれたボタンをクリック
-2. 表示されるリストから **`dev`** を選択
+> 「ポケットセット（`lineup/set/pocket/index.html`）の価格表記を『税込』から『税抜/税込』併記にして」
 
-これで「dev ブランチの画面」を見ている状態になります。画面上に **`dev`** と表示されていればOK。
+→ Claude が該当箇所を探して編集。どこを変えたか差分も見せます。
 
-### Step 3: 編集したいファイルを開く
+#### ローカル確認を依頼
 
-ファイル一覧から該当のファイル・フォルダをクリックして進みます。
+> 「変更内容をブラウザで確認したい。サーバー起動して URL 教えて」
 
-**よくある編集先**:
-- `index.html` → トップページ
-- `faq/index.html` → FAQページ
-- `lineup/set/pocket/index.html` → ポケットセットの説明ページ
-- `wp-content/themes/hope21/assets/js/calendar-data.json` → 営業日カレンダー
+→ Claude が `python3 -m http.server 3000` を起動、URL を案内。
 
-👉 どこに何があるか迷ったら [SITE_PAGES.md](SITE_PAGES.md) を見てください。
+目で確認 → OKなら次へ。
 
-### Step 4: 編集モードに入る
+#### コミットと push を依頼
 
-ファイルを開いた画面の **右上にある鉛筆アイコン 🖊️** をクリックします。
+> 「OK。コミットして dev にプッシュして」
 
-### Step 5: 内容を編集
+→ Claude が:
+- 変更ファイルを `git add`
+- 日本語で適切なコミットメッセージを作成
+- `git push origin dev`
 
-変更したい箇所を直接書き換えます。
+#### Preview 確認
 
-⚠️ **注意**:
-- HTMLタグ（`<div>` など）は**壊さないように**
-- `src="..."` `href="..."` の中のパスは**触らない**
-- 文字だけ変えるのが一番安全
+1〜3分後に https://crosswing-co-jp.github.io/hope21jp-website/ で自動反映。
 
-### Step 6: 保存（Commit）
+同じページをブラウザで開いて確認。
 
-画面右上の **[Commit changes...]** という緑のボタンをクリックします。
+#### PR 作成を依頼
 
-ポップアップが出ます:
-| 項目 | 入力内容 |
-|---|---|
-| Commit message (変更内容の説明) | 例: `トップページのキャンペーン文言を更新` |
-| 拡張説明 (Extended description) | 任意（空欄でOK） |
-| コミット先 | **`Commit directly to the dev branch`** を選択 |
+> 「Preview で確認OK。dev から main への PR を作って」
 
-→ **[Commit changes]** をクリック。
+→ Claude が `gh pr create` を実行。PR URL を返します。
 
-### Step 7: Preview で確認（2〜3分待つ）
+#### レビュー依頼
 
-自動的にプレビュー環境にアップされます。所要 2〜3分。
+GitHub 上で PR ページを開き、右側の **Reviewers** でレビュアーを指定。
+Slack なり口頭なりで「レビューお願い」と声かけ。
 
-**Preview URL**:
-https://crosswing-co-jp.github.io/hope21jp-website/
+#### マージ
 
-変更したページをここで開いて、**正しく表示されるか確認**してください。
+レビュアー（または自分）が PR を Merge。2〜3分後、https://hope21.jp に反映。
 
-> 🕰️ 2〜3分経っても反映されない場合は [Actions タブ](https://github.com/crosswing-co-jp/hope21jp-website/actions) でエラーが出ていないか確認。
+---
 
-### Step 8: Pull Request を作成
+## ローカルで見た目を確認
 
-Preview で確認OKなら、本番に反映する準備をします。
+Claude に以下を頼めば `python3 -m http.server` を起動します:
 
-1. https://github.com/crosswing-co-jp/hope21jp-website/compare/main...dev を開く
-2. 右上の **[Create pull request]** ボタンをクリック
-3. タイトル: `〇〇ページの△△を更新` のように分かりやすく
-4. 説明欄: 何を変えたかを簡潔に書く（任意）
-5. 右側の **Reviewers** 欄でレビュアー（確認してくれる人）を指定
-6. **[Create pull request]** をクリック
+> 「ローカルサーバー起動して」
 
-これで「レビュー待ち」状態になります。
+- **トップページ**: http://localhost:3000
+- **ポケットセットページ**: http://localhost:3000/lineup/set/pocket/
+- **FAQ**: http://localhost:3000/faq/
 
-### Step 9: レビュー → マージ
+> ⚠️ HTMLファイルを **直接ダブルクリックで開くのはNG**。パスが解決できず表示崩れします。必ずローカルサーバー経由で。
 
-レビュアー（または自分自身が承認権限ありなら）:
-1. PR のページを開く
-2. 変更内容を見て問題なければ **[Merge pull request]** ボタン
-3. **[Confirm merge]** をクリック
+---
 
-マージが完了すると、**自動的に本番デプロイが始まります**。
+## Preview と 本番
 
-### Step 10: 本番反映を確認（2〜3分待つ）
+| 環境 | URL | 反映タイミング |
+|---|---|---|
+| **ローカル** | http://localhost:3000 | 保存したらすぐ（リロードで反映） |
+| **Preview** | https://crosswing-co-jp.github.io/hope21jp-website/ | dev に push して **2〜3分後** |
+| **本番** | https://hope21.jp | main にマージして **2〜3分後** |
 
-https://hope21.jp を開いて、変更が反映されているか確認してください。
+### Actions で進捗を見る
+https://github.com/crosswing-co-jp/hope21jp-website/actions
 
-> 🕰️ ブラウザのキャッシュが残っていると古いページが表示される場合があります。
-> Chromeなら **Cmd+Shift+R**（Mac）/ **Ctrl+F5**（Windows）で強制リロード。
+緑のチェック ✅ が出ればデプロイ成功。赤い ❌ が出たらエラー。
+エラーなら Claude に「Actions で失敗してる、原因調べて」と頼めば確認してくれます。
 
 ---
 
 ## よくある作業パターン
 
-### ケース A: ページ内の文章を変更したい
+### ケース A: 文章を変更
 
-Step 1〜10 をそのまま実行。
+> 「`index.html` の『春のキャンペーン』という文言を『春の特別企画』に変えて」
 
-### ケース B: 画像を差し替えたい
+### ケース B: 画像を差し替え
 
-1. `dev` ブランチに移動
-2. `wp-content/uploads/YYYY/MM/` フォルダへ移動（YYYY/MMは現在の年月）
-3. 右上 **[Add file]** → **[Upload files]**
-4. 新しい画像（**WebP形式推奨**）をドラッグ＆ドロップ
-5. Commit message を書いて **[Commit changes]**
-6. その画像を表示するHTMLファイルの `<img src="...">` を新ファイル名に書き換え（Step 3〜6）
-7. Preview で確認、PR、マージ
+> 「`wp-content/uploads/2026/04/` に `new-banner.webp` を追加してほしい。
+> 置いたら `index.html` のトップビジュアル画像をそれに差し替えて」
 
-### ケース C: 営業日（休業日）を更新したい
+実際に画像ファイルは手動で配置 or Claude に Finder 操作を頼む。
+配置後、Claude に HTML側の `<img src="...">` 書き換えを依頼。
 
-1. `dev` ブランチに移動
-2. `wp-content/themes/hope21/assets/js/calendar-data.json` を開く
-3. 編集モード（🖊️）
-4. 該当月を追加・編集:
-```json
-{
-  "holidays": {
-    "2026-05": [2, 3, 4, 5, 6, 9, 10, 16, 17, 23, 24, 30, 31]
-  }
-}
-```
-5. Commit → Preview確認 → PR → マージ
+### ケース C: 営業日カレンダー更新
 
-### ケース D: 新しいキャンペーンページを作りたい
+> 「2026年6月の休業日を `calendar-data.json` に追加して。
+>  土日全部と、6/5 (金) を休みにして」
 
-ちょっと複雑なので、**エンジニアに相談**するのがおすすめです。
-既存のキャンペーンページ（例: `pr/nosenose_cp/`）をコピーしてもらってから、中身だけ編集する流れだと安全。
+Claude が JSON を適切に編集します。
+
+### ケース D: 新しいキャンペーンページ追加
+
+> 「`/pr/summer-2026-cp/` に新しいキャンペーンページを作って。
+>  既存の `pr/nosenose_cp/` をテンプレにして、
+>  タイトルは『夏の2026キャンペーン』で。
+>  中身はあとで編集するので、まずは箱だけ用意してほしい」
+
+Claude が既存ページをコピーして最低限書き換えます。
+その後、内容を詰める段階で再度 Claude に頼みます。
+
+### ケース E: PR のレビューコメントに対応
+
+> 「PR #42 にコメントが付いてる。内容を確認して、指摘に対応する変更を dev にコミットして」
+
+Claude が `gh pr view 42 --comments` で確認 → 修正 → コミット。
 
 ---
 
 ## 困ったとき
 
-### Q1. Preview に反映されない
-- 2〜3分待ってもダメな場合、[Actions タブ](https://github.com/crosswing-co-jp/hope21jp-website/actions) を確認
-- 赤い❌マークがあったら、エンジニアに見せて原因を聞く
-- 黄色い◎マーク（進行中）なら、もう少し待つ
+### Q1. Preview が反映されない
+> 「Preview に反映されてない。Actions で失敗してないか確認して」
 
-### Q2. 本番に反映されない
-- マージ後 2〜3分待つ
-- ブラウザキャッシュを強制リロード（Cmd+Shift+R / Ctrl+F5）
-- それでもダメなら [Actions タブ](https://github.com/crosswing-co-jp/hope21jp-website/actions) の "Deploy to Production" が成功したか確認
+→ Claude が `gh run list` などで確認、原因を説明。
 
-### Q3. 間違って編集してしまった（マージ前）
-- dev ブランチ上の該当ファイルをもう一度編集して、正しい状態に戻す
-- Commit すれば Preview も更新される
+### Q2. 間違ってコミットしてしまった
+> 「直前のコミットを取り消して、変更内容は残したい」
 
-### Q4. 間違ってマージしてしまった（本番に悪い変更が出た）
-- **すぐエンジニアに連絡**
-- 緊急度が高ければエンジニア側で `git revert`（取り消し）して再デプロイ
+→ `git reset --soft HEAD^` を Claude が実行。
 
-### Q5. 文字化けや表示崩れが起きた
-- HTMLタグを壊してしまった可能性
-- 1つ前の状態に戻す（Step 8 を逆に実行 or エンジニア相談）
+### Q3. 本番にすでに出てしまった悪い変更を戻したい
+> 「直前の本番デプロイを revert したい」
 
-### Q6. そもそもよくわからない
-エンジニアに声をかけてください。事故を起こすよりよっぽど良いです。
+→ Claude が `git revert` + PR 作成で対処。
+
+### Q4. Claude が何をしているか分からなくなった
+> 「今の git 状態と、やろうとしていることを整理して」
+
+→ 現状のブランチ・変更・未コミット等をまとめて説明します。
+
+### Q5. 致命的なエラーが出た
+→ そのままエラー文を Claude に貼って「これ何？」と聞く。
+→ それでも不明なら **エンジニア（またはSlack）に連絡**。
 
 ---
 
-## 連絡先
+## 魔法の合言葉（困ったら最初にこれ）
 
-- **リポジトリ**: https://github.com/crosswing-co-jp/hope21jp-website
-- **本番サイト**: https://hope21.jp
-- **Preview サイト**: https://crosswing-co-jp.github.io/hope21jp-website/
-- **Actions（デプロイ状況）**: https://github.com/crosswing-co-jp/hope21jp-website/actions
+> 「このリポジトリの運用ルールをざっくり教えて」
+
+→ Claude が [CLAUDE.md](CLAUDE.md) を元に概要説明。
+
+> 「`/welcome`」
+
+→ 詳細なウェルカムメッセージが出ます。
+
+---
 
 ## 参考ドキュメント
 
 - [README.md](README.md) — プロジェクト全体の概要
-- [RELEASE.md](RELEASE.md) — エンジニア向けの詳しいリリース手順
+- [RELEASE.md](RELEASE.md) — エンジニア向けの詳細リリース手順
 - [SITE_PAGES.md](SITE_PAGES.md) — どのページがどこにあるかの一覧
+- [CLAUDE.md](CLAUDE.md) — Claude Code 用の運用ルール（Claude が自動参照）
+
+## 連絡先
+
+- リポジトリ: https://github.com/crosswing-co-jp/hope21jp-website
+- 本番: https://hope21.jp
+- Preview: https://crosswing-co-jp.github.io/hope21jp-website/
+- Actions: https://github.com/crosswing-co-jp/hope21jp-website/actions
 
 ---
 
 ## 心構え
 
-1. **急がない**: Preview で確認する癖をつける
-2. **迷ったら聞く**: 小さな疑問でも早めに
-3. **大きな変更は PR 段階でスクショ共有**: 視覚的に確認してもらう
+1. **Claude と協働する** — 全部自分でやろうとしない
+2. **dev で試してから main へ** — Preview で目視必須
+3. **迷ったら聞く** — Claude にも人間にも
 
-✨ 安全に運用できればサイトが長く健康でいられます。お疲れさまです。
+✨ お疲れさまです。
