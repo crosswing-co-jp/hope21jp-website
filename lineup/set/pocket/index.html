@@ -509,15 +509,15 @@ header {
 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
 <main class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
 <style>
-.proto-main{--proto-hot:#F5114F;--proto-brand:#006DBE;--proto-brand-soft:#DDEDF8;--proto-border:#E3E6EA;--proto-muted:#666;--proto-radius:8px}
+.proto-main{--proto-hot:#BF0000;--proto-brand:#006DBE;--proto-brand-soft:#DDEDF8;--proto-border:#B2B2B2;--proto-muted:#686868;--proto-radius:10px}
 .proto-main .proto-label{display:inline-block;font-size:11px;color:var(--proto-muted);background:#F4F7FA;padding:4px 12px;border-radius:999px;letter-spacing:.05em;font-weight:500;margin-bottom:10px}
 .proto-main h1.proto-title{font-size:clamp(24px,3vw,34px);margin:0 0 12px;line-height:1.3;font-weight:700;letter-spacing:.01em}
 .proto-main .proto-lead{font-size:15px;color:var(--proto-muted);margin:0 0 24px;line-height:1.8}
 .proto-main .proto-lead strong{color:#222}
 .proto-main .proto-chooser{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0 32px}
 @media (max-width:780px){.proto-main .proto-chooser{grid-template-columns:1fr}}
-.proto-main .proto-card{background:#fff;border:2px solid var(--proto-border);border-radius:var(--proto-radius);padding:18px 14px;text-align:center;transition:all .15s;text-decoration:none;color:#222;display:flex;flex-direction:column;align-items:center}
-.proto-main .proto-card:hover{border-color:var(--proto-brand);box-shadow:0 4px 12px rgba(0,0,0,.08);text-decoration:none;transform:translateY(-2px)}
+.proto-main .proto-card{background:#fff;border:1px solid var(--proto-border);border-radius:var(--proto-radius);padding:18px 14px;text-align:center;transition:all .15s;text-decoration:none;color:#222;display:flex;flex-direction:column;align-items:center}
+.proto-main .proto-card:hover{border-color:var(--proto-brand);text-decoration:none}
 .proto-main .proto-card:focus{outline:none}
 .proto-main .proto-card:focus-visible{outline:2px solid var(--proto-brand);outline-offset:2px}
 .proto-main .proto-card .tag{display:inline-block;font-size:10px;background:var(--proto-brand);color:#fff;padding:2px 10px;border-radius:999px;margin-bottom:8px;letter-spacing:.05em;font-weight:600}
@@ -525,8 +525,8 @@ header {
 .proto-main .proto-card.recommended .tag{background:var(--proto-hot)}
 .proto-main .proto-card.plus .tag{background:#f5b400;color:#222}
 .proto-main .proto-card.color .tag{background:#ab1dfe}
-.proto-main .proto-card-thumb{width:100%;max-width:200px;height:auto;aspect-ratio:286/161;object-fit:contain;margin:4px auto 10px;border-radius:6px;display:block;transition:transform .2s}
-.proto-main .proto-card:hover .proto-card-thumb{transform:scale(1.03)}
+.proto-main .proto-card-thumb{width:100%;max-width:200px;height:auto;aspect-ratio:286/161;object-fit:contain;margin:4px auto 10px;border-radius:6px;display:block}
+.proto-main .proto-card:hover .proto-card-thumb{transform:none}
 .proto-main .proto-card h3{margin:4px 0 6px;font-size:15px;font-weight:700}
 .proto-main .proto-card .sub{font-size:12px;color:var(--proto-muted);margin:0 0 12px;line-height:1.5}
 .proto-main .proto-card-spec{margin:0;padding:10px 12px 4px;font-size:11px;display:flex;flex-direction:column;gap:4px;border-top:1px dashed var(--proto-border);width:100%}
@@ -535,27 +535,28 @@ header {
 .proto-main .proto-card-spec dd{margin:0;color:#222;font-size:11px;display:flex;align-items:center;gap:4px;text-align:left}
 .proto-main .proto-card-spec dd img{flex-shrink:0;border-radius:2px}
 .proto-main .proto-card-spec strong{color:var(--proto-brand);font-size:13px;font-weight:900}
-.proto-main .proto-card-note{margin:8px 0 0;padding:5px 8px;font-size:10px;color:#6b4c00;background:#fff9e6;border:1px solid #f5b400;border-radius:4px;text-align:center;line-height:1.4}
-.proto-main .proto-card-note strong{color:#b45309;font-weight:700}
+.proto-main .proto-card-note{margin:8px 0 0;padding:0;font-size:11px;color:var(--proto-muted);text-align:center;line-height:1.4}
+.proto-main .proto-card-note strong{color:var(--proto-brand);font-weight:700}
 .proto-main .proto-card-spec{margin-left:-14px!important;margin-right:-14px!important;margin-bottom:-18px!important;padding:10px 14px 12px;border-bottom-left-radius:calc(var(--proto-radius) - 2px);border-bottom-right-radius:calc(var(--proto-radius) - 2px);background:#fafbfc}
 .proto-main .proto-section{margin:40px 0 12px;padding:4px 0 4px 12px;border-left:4px solid var(--proto-brand);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .proto-main .proto-section h2{margin:0;font-size:19px;font-weight:700;line-height:1.4}
 .proto-main .proto-section .note{font-size:11px;color:var(--proto-muted)}
-.proto-main .proto-compare{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--proto-border);border-radius:var(--proto-radius);overflow:hidden;margin:8px 0 32px;font-size:13px}
-.proto-main .proto-compare th,.proto-main .proto-compare td{padding:12px 14px;border-bottom:1px solid var(--proto-border);text-align:left;vertical-align:top;line-height:1.6}
-.proto-main .proto-compare thead th{background:#F4F7FA;font-size:12px;color:var(--proto-muted);font-weight:600;white-space:nowrap}
-.proto-main .proto-compare thead th.product{color:#222;font-size:14px}
-.proto-main .proto-compare thead th.product small{display:block;font-size:10px;color:var(--proto-muted);font-weight:400;margin-top:2px}
+.proto-main .proto-compare{width:100%;border-collapse:collapse;background:#fff;border:none;border-radius:var(--proto-radius);overflow:hidden;margin:8px 0 32px;font-size:13px}
+.proto-main .proto-compare th,.proto-main .proto-compare td{padding:12px 14px;border-bottom:1px solid #e3e6ea;border-right:1px solid #e3e6ea;text-align:left;vertical-align:top;line-height:1.6}
+.proto-main .proto-compare th:last-child,.proto-main .proto-compare td:last-child{border-right:none}
+.proto-main .proto-compare thead th{background:var(--proto-brand);font-size:12px;color:#fff;font-weight:600;white-space:nowrap}
+.proto-main .proto-compare thead th.product{color:#fff;font-size:14px}
+.proto-main .proto-compare thead th.product small{display:block;font-size:10px;color:rgba(255,255,255,.85);font-weight:400;margin-top:2px}
 .proto-main .proto-compare tbody th{font-weight:600;color:var(--proto-muted);font-size:12px;background:#fafbfc;width:110px}
 .proto-main .proto-compare tr:last-child td,.proto-main .proto-compare tr:last-child th{border-bottom:none}
 .proto-main .proto-compare .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:999px;background:#F4F7FA;color:var(--proto-muted);margin-left:4px;font-weight:500}
 .proto-main .proto-compare .badge.hot{background:var(--proto-hot);color:#fff}
-.proto-main .proto-compare .highlight{background:#fff8e1}
+.proto-main .proto-compare .highlight{background:var(--proto-brand-soft)}
 .proto-main .proto-compare .cta-row td{background:var(--proto-brand-soft);padding:14px}
-.proto-main .proto-compare .mini-cta{display:inline-block;background:var(--proto-hot);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;text-decoration:none}
-.proto-main .proto-compare .mini-cta:hover{background:#d70e44;text-decoration:none}
+.proto-main .proto-compare .mini-cta{display:inline-block;background:#fcb900;color:#222;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;white-space:nowrap;text-decoration:none}
+.proto-main .proto-compare .mini-cta:hover{background:#e5a800;text-decoration:none}
 @media (max-width:780px){.proto-main .proto-compare{font-size:11px}.proto-main .proto-compare th,.proto-main .proto-compare td{padding:8px}.proto-main .proto-compare tbody th{width:70px}}
-.proto-main .proto-detail{background:#fff;border:1px solid var(--proto-border);border-radius:var(--proto-radius);padding:22px;margin:16px 0 20px;scroll-margin-top:16px}
+.proto-main .proto-detail{background:transparent;border:none;border-radius:0;padding:22px 0;margin:16px 0 20px;scroll-margin-top:16px}
 .proto-main .proto-detail-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
 .proto-main .proto-detail-head-text{flex:1;min-width:0}
 .proto-main .proto-detail-head-text h3{margin:0 0 4px}
@@ -570,7 +571,7 @@ header {
 .proto-main .proto-detail .pill.color{background:#f3e8ff;color:#6a1bab}
 .proto-main .proto-detail .pill.plus{background:#fef3c7;color:#92400e}
 .proto-main .proto-detail .desc{color:var(--proto-muted);margin:4px 0 18px;font-size:13px}
-.proto-main .proto-spec{display:flex;flex-direction:column;margin:0;border-top:1px solid var(--proto-border)}
+.proto-main .proto-spec{display:flex;flex-direction:column;margin:0}
 .proto-main .proto-spec .row{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid var(--proto-border);padding:10px 2px;gap:14px;font-size:13px;line-height:1.7}
 @media (max-width:560px){.proto-main .proto-spec .row{grid-template-columns:1fr;gap:2px;padding:8px 2px}}
 .proto-main .proto-spec dt{color:var(--proto-muted);font-size:12px;font-weight:600;margin:0}
@@ -585,12 +586,10 @@ header {
 .proto-main .proto-campaigns{margin:4px 0;padding:0;list-style:none}
 .proto-main .proto-campaigns li{padding:7px 12px;background:#fff;border:1px solid var(--proto-border);border-radius:4px;margin:4px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .proto-main .proto-campaigns .days{font-size:11px;color:var(--proto-hot);font-weight:600;white-space:nowrap}
-.proto-main .proto-cta-block{display:flex;gap:12px;align-items:center;margin-top:18px;padding:14px 18px;background:var(--proto-brand-soft);border-radius:var(--proto-radius)}
-@media (max-width:560px){.proto-main .proto-cta-block{flex-direction:column;align-items:stretch;text-align:center}}
-.proto-main .proto-cta-block .label{flex:1;font-size:13px;color:var(--proto-muted);line-height:1.5}
-.proto-main .proto-cta-block .label strong{display:block;color:#222;font-size:14px;margin-bottom:2px}
-.proto-main .proto-cta-block .btn{background:var(--proto-hot);color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;white-space:nowrap;text-decoration:none;text-align:center}
-.proto-main .proto-cta-block .btn:hover{background:#d70e44;text-decoration:none}
+.proto-main .proto-cta-button-wrap{display:flex;justify-content:center;margin-top:24px;margin-bottom:8px}
+.proto-main .proto-cta-button{background:#fcb900;color:#222;padding:14px 28px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;text-align:center;line-height:1.4;transition:background .15s}
+.proto-main .proto-cta-button:hover{background:#e5a800;text-decoration:none}
+@media (max-width:560px){.proto-main .proto-cta-button{display:block;width:100%;font-size:13px}}
 .proto-main .proto-caution{background:#F4F7FA;border-radius:var(--proto-radius);padding:20px 24px;margin-top:28px;font-size:13px;color:var(--proto-muted);line-height:1.9}
 .proto-main .proto-caution h3{margin:0 0 8px;color:#222;font-size:15px;font-weight:700}
 .proto-main .proto-caution h4{margin:16px 0 6px;color:#222;font-size:13px;font-weight:700}
@@ -599,7 +598,7 @@ header {
 .proto-main .proto-caution .hot{color:var(--proto-hot);font-weight:600}
 .proto-main .proto-notice{background:#fff9e6;border:1px solid #f5b400;border-radius:var(--proto-radius);padding:10px 16px;margin:0 0 20px;font-size:12px;color:#6b4c00;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .proto-main .proto-notice a{color:#6b4c00;text-decoration:underline;font-weight:600}
-.proto-main .proto-pricebox{background:#fff;border:1px solid var(--proto-border);border-radius:var(--proto-radius);padding:16px;margin:8px 0 32px}
+.proto-main .proto-pricebox{background:transparent;border:none;border-radius:0;padding:16px 0;margin:8px 0 32px}
 .proto-main .proto-price-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
 .proto-main .proto-price-tabs .ptab{flex:1;min-width:120px;padding:10px 12px;background:#F4F7FA;border:1px solid var(--proto-border);border-radius:6px 6px 0 0;cursor:pointer;font-size:13px;font-weight:600;color:var(--proto-muted);font-family:inherit;line-height:1.3;text-align:center}
 .proto-main .proto-price-tabs .ptab small{display:block;font-size:10px;font-weight:400;margin-top:2px;color:var(--proto-muted)}
@@ -624,20 +623,26 @@ header {
 .proto-main .proto-price-note{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--proto-muted);margin:8px 0 12px;padding:0 4px}
 .proto-main .proto-price-note a{color:var(--proto-brand);font-weight:600}
 .proto-main .proto-price-wrap{overflow-x:auto}
-.proto-main .proto-price-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
-.proto-main .proto-price-table thead th{background:#333;color:#fff;padding:8px 10px;font-weight:500;font-size:12px;text-align:center;white-space:nowrap}
-.proto-main .proto-price-table thead th.corner{background:#222;position:sticky;left:0;z-index:2}
+.proto-main .proto-price-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px;table-layout:fixed}
+.proto-main .proto-price-table thead th{background:var(--proto-brand);color:#fff;padding:10px 8px;font-weight:600;font-size:12px;text-align:center;white-space:nowrap}
+.proto-main .proto-price-table thead th.corner{background:var(--proto-brand);color:#fff;position:sticky;left:0;z-index:2}
 .proto-main .proto-price-table tbody{display:none}
 .proto-main .proto-price-table tbody.active{display:table-row-group}
-.proto-main .proto-price-table tbody th{background:#555;color:#fff;padding:6px 10px;font-weight:500;font-size:12px;text-align:right;position:sticky;left:0;white-space:nowrap}
-.proto-main .proto-price-table tbody td{padding:7px 10px;text-align:right;border:1px solid #eaecef;background:#fff;font-variant-numeric:tabular-nums;color:#222;line-height:1.25}
+.proto-main .proto-price-table tbody th{background:#F4F7FA;color:#222;padding:8px 10px;font-weight:600;font-size:12px;text-align:center;position:sticky;left:0;white-space:nowrap;border-bottom:1px solid #e3e6ea}
+.proto-main .proto-price-table tbody td{padding:8px 10px;text-align:right;border-bottom:1px solid #e3e6ea;background:#fff;font-variant-numeric:tabular-nums;color:#222;line-height:1.3}
 .proto-main .proto-price-table tbody td .pt{display:block;font-size:13px;font-weight:600;color:#222}
-.proto-main .proto-price-table tbody td .pu{display:block;font-size:10px;color:#9c27b0;font-weight:500;margin-top:1px}
+.proto-main .proto-price-table tbody td .pu{display:block;font-size:10px;color:var(--proto-muted);font-weight:500;margin-top:1px}
 .proto-main .proto-price-table tbody tr:nth-child(even) td{background:#fafbfc}
-.proto-main .proto-price-table tbody tr:hover td{background:#fff8e1}
+.proto-main .proto-price-table tbody tr:hover td,.proto-main .proto-price-table tbody tr:hover th{background:var(--proto-brand-soft)}
+.proto-main .proto-price-table tbody:has(td:nth-child(2):hover) td:nth-child(2),
+.proto-main .proto-price-table tbody:has(td:nth-child(3):hover) td:nth-child(3),
+.proto-main .proto-price-table tbody:has(td:nth-child(4):hover) td:nth-child(4),
+.proto-main .proto-price-table tbody:has(td:nth-child(5):hover) td:nth-child(5),
+.proto-main .proto-price-table tbody:has(td:nth-child(6):hover) td:nth-child(6),
+.proto-main .proto-price-table tbody:has(td:nth-child(7):hover) td:nth-child(7){background:var(--proto-brand-soft)}
 .proto-main .proto-price-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--proto-border);flex-wrap:wrap}
-.proto-main .proto-price-cta{background:var(--proto-hot);color:#fff;padding:11px 18px;border-radius:999px;font-weight:700;font-size:13px;white-space:nowrap;text-decoration:none}
-.proto-main .proto-price-cta:hover{background:#d70e44;text-decoration:none}
+.proto-main .proto-price-cta{background:#fcb900;color:#222;padding:11px 18px;border-radius:10px;font-weight:600;font-size:13px;white-space:nowrap;text-decoration:none}
+.proto-main .proto-price-cta:hover{background:#e5a800;text-decoration:none}
 @media (max-width:560px){.proto-main .proto-price-tabs .ptab{flex:1 1 45%;font-size:12px;padding:8px 6px}.proto-main .proto-price-foot{flex-direction:column;align-items:stretch}.proto-main .proto-price-cta{text-align:center}}
 </style>
 <div class="proto-main">
@@ -694,7 +699,7 @@ header {
 <tr><th>本文用紙<br><a href="../../../sample/swatch/index.html" style="font-size:9px;font-weight:400;color:#006DBE">紙見本 →</a></th><td>7種</td><td>8種（+マットコート）</td><td>2種</td></tr>
 <tr><th>遊び紙<br><a href="../../../sample/swatch/index.html" style="font-size:9px;font-weight:400;color:#006DBE">紙見本 →</a></th><td>1種</td><td class="highlight">4系統</td><td>2系統（+1日）</td></tr>
 <tr><th>有料オプション</th><td>紙替え・角丸</td><td class="highlight">PP/箔押し/角丸/アート遊び紙</td><td>紙替え・角丸</td></tr>
-<tr><th>キャンペーン</th><td>早割15%/25%<br>超短納期・のせのせ</td><td class="highlight">早割5%〜20%（4段階）<br>超短納期・のせのせ</td><td>早割15%/25%<br>のせのせ</td></tr>
+<tr><th>キャンペーン</th><td>PP加工無料<br>早割15%/25%<br>超短納期・のせのせ</td><td class="highlight">早割5%〜20%（4段階）<br>超短納期・のせのせ</td><td>早割15%/25%<br>のせのせ</td></tr>
 
 </tbody>
 </table>
@@ -909,7 +914,7 @@ header {
 <details class="proto-paper"><summary>有料オプション（紙替え12種 + 角丸）</summary><ul><li>デュークブラウン / シャインフェイス / 新星物語 / ファンタス</li><li>マーメイド（4色）/ きらびきHG / ミランダ（2色）/ シェルルックN</li><li>加工: 角丸</li><li><a href="../../../sample/swatch/index.html" style="color:#006DBE;font-weight:600">→ 紙見本（swatch）を見る</a></li></ul></details>
 </dd></div>
 <div class="row"><dt>キャンペーン</dt><dd>
-<ul class="proto-campaigns"><li><strong style="color:#b45309">PP加工無料</strong><span class="days">＋2日</span></li>
+<ul class="proto-campaigns"><li><strong>PP加工無料</strong><span class="days">＋2日</span></li>
 <li>早割 15%OFF or 早得 20POINT<span class="days">＋1日</span></li>
 <li>早割 25%OFF or 早得 30POINT<span class="days">＋2日</span></li>
 <li>超短納期お助け企画（事前予約・連絡不要）</li>
@@ -917,9 +922,8 @@ header {
 </ul>
 </dd></div>
 </dl>
-<div class="proto-cta-block">
-<div class="label"><strong>ポケットセットの料金を確認</strong>見積もりNaviで試算できます</div>
-<a class="btn" href="../../../sys/order/102/" target="_blank">料金を見る →</a>
+<div class="proto-cta-button-wrap">
+<a class="proto-cta-button" href="../../../sys/order/102/" target="_blank">見積もりNaviで「ポケットセット」の締切・料金を確認する →</a>
 </div>
 </section>
 
@@ -954,9 +958,8 @@ header {
 <p style="font-size:11px;color:#888;margin:6px 0 0">※大型イベント時は+5日で早割30%OFFの場合あり</p>
 </dd></div>
 </dl>
-<div class="proto-cta-block">
-<div class="label"><strong>ポケットセット＋の料金を確認</strong>見積もりNaviで試算できます</div>
-<a class="btn" href="../../../sys/order/104/" target="_blank">料金を見る →</a>
+<div class="proto-cta-button-wrap">
+<a class="proto-cta-button" href="../../../sys/order/104/" target="_blank">見積もりNaviで「ポケットセット＋」の締切・料金を確認する →</a>
 </div>
 </section>
 
@@ -988,9 +991,8 @@ header {
 </ul>
 </dd></div>
 </dl>
-<div class="proto-cta-block">
-<div class="label"><strong>カラーポケットセットの料金を確認</strong>見積もりNaviで試算できます</div>
-<a class="btn" href="../../../sys/order/103/" target="_blank">料金を見る →</a>
+<div class="proto-cta-button-wrap">
+<a class="proto-cta-button" href="../../../sys/order/103/" target="_blank">見積もりNaviで「カラーポケットセット」の締切・料金を確認する →</a>
 </div>
 </section>
 
